@@ -7,7 +7,7 @@
 <meta name="description" content="Shotaro Yamasaki, theoretical astrophysicist working on fast radio bursts, magnetars and cosmology.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+JP:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
 /* ============================================================
    DESIGN TOKENS — edit this block to restyle the whole site.
@@ -25,8 +25,8 @@
   --accent-2:  #c9a2ff;   /* low-frequency end of the sweep  */
   --star:      #f3c77a;   /* representative-paper marker     */
   /* type */
-  --font-display: "Syne", "Noto Sans JP", "Avenir Next", "Segoe UI", sans-serif;
-  --font-body:    "IBM Plex Sans", "Noto Sans JP", "Hiragino Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Syne", "Noto Sans JP", "Noto Sans TC", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body:    "IBM Plex Sans", "Noto Sans JP", "Noto Sans TC", "Hiragino Sans", "PingFang TC", "Helvetica Neue", Arial, sans-serif;
   --font-mono:    "IBM Plex Mono", ui-monospace, Menlo, monospace;
   /* scale */
   --step-0: 1rem;  --step-1: 1.2rem;  --step-2: 1.5rem;  --step-3: 2.1rem;  --step-4: clamp(2.4rem, 6vw, 4.2rem);
@@ -128,9 +128,11 @@ section { padding-block: 4.5rem; border-bottom: 1px solid var(--line); }
 
 
 /* language toggle */
-.lang { cursor: pointer; flex: none; padding: 0.3rem 0.7rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); font: 500 0.78rem var(--font-mono); }
-.lang:hover { border-color: var(--accent); }
-html[lang="ja"] body { line-height: 1.8; }
+.langs { flex: none; display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang { cursor: pointer; padding: 0.3rem 0.6rem; border: 0; background: transparent; color: var(--muted); font: 500 0.75rem var(--font-body); }
+.lang:hover { color: var(--fg); }
+.lang[aria-pressed="true"] { background: var(--accent); color: var(--bg); }
+html[lang="ja"] body, html[lang="zh-Hant-TW"] body { line-height: 1.8; }
 html[lang="ja"] .label { letter-spacing: 0.08em; }
 /* news */
 .news { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
@@ -178,43 +180,45 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 
 <nav aria-label="Sections">
   <div class="wrap">
-    <a class="brand" href="#top" data-ja="山崎翔太郎">Shotaro Yamasaki</a>
+    <a class="brand" href="#top" data-ja="山崎翔太郎" data-zh="山崎翔太郎">Shotaro Yamasaki</a>
     <ul>
-      <li><a href="#news" data-ja="ニュース">News</a></li>
-      <li><a href="#research" data-ja="研究">Research</a></li>
-      <li><a href="#publications" data-ja="論文">Publications</a></li>
-      <li><a href="#mentoring" data-ja="学生指導">Mentoring</a></li>
-      <li><a href="#career" data-ja="経歴">Career</a></li>
-      <li><a href="#talks" data-ja="講演">Talks</a></li>
-      <li><a href="#contact" data-ja="連絡先">Contact</a></li>
+      <li><a href="#news" data-ja="ニュース" data-zh="最新消息">News</a></li>
+      <li><a href="#research" data-ja="研究" data-zh="研究">Research</a></li>
+      <li><a href="#publications" data-ja="論文" data-zh="論文">Publications</a></li>
+      <li><a href="#mentoring" data-ja="学生指導" data-zh="學生指導">Mentoring</a></li>
+      <li><a href="#career" data-ja="経歴" data-zh="經歷">Career</a></li>
+      <li><a href="#talks" data-ja="講演" data-zh="演講">Talks</a></li>
+      <li><a href="#contact" data-ja="連絡先" data-zh="聯絡">Contact</a></li>
     </ul>
-    <button type="button" id="lang" class="lang" aria-label="Switch language">日本語</button>
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" class="lang" data-l="en" aria-pressed="true">EN</button><button type="button" class="lang" data-l="ja" aria-pressed="false">日本語</button><button type="button" class="lang" data-l="zh" aria-pressed="false">中文</button>
+    </div>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="hero-art" role="img" aria-label="Artist impression of fast radio bursts arriving at radio telescopes"></div>
-  <p class="credit" data-ja="イラスト © S. Yamasaki &amp;amp; D. Futselaar">Illustration © S. Yamasaki &amp; D. Futselaar</p>
+  <p class="credit" data-ja="イラスト © S. Yamasaki &amp;amp; D. Futselaar" data-zh="插圖 © S. Yamasaki &amp;amp; D. Futselaar">Illustration © S. Yamasaki &amp; D. Futselaar</p>
   <div class="wrap">
     <div>
-      <p class="label" data-ja="理論宇宙物理学 · 高速電波バースト">Theoretical astrophysics · Fast radio bursts</p>
-      <h1 style="margin-top:0.8rem" data-ja="山崎 翔太郎">Shotaro<br>Yamasaki</h1>
-      <p class="role" data-ja="&lt;strong&gt;台湾国家科学及技術委員会(NSTC)招聘研究員&lt;/strong&gt;&lt;br&gt;国立中興大学 物理学科(台湾)"><strong>NSTC Visiting Research Scholar</strong><br>Department of Physics, National Chung Hsing University, Taiwan</p>
-      <p class="pitch" data-ja="高速電波バースト(FRB)を、マグネターの中心エンジンやバーストの統計から、母銀河、宇宙の電離ガスまで、さまざまなスケールで研究しています。">I study fast radio bursts across physical scales, from magnetar engines and burst statistics to host galaxies and the ionized Universe.</p>
+      <p class="label" data-ja="理論宇宙物理学 · 高速電波バースト" data-zh="理論天文物理 · 快速電波爆發">Theoretical astrophysics · Fast radio bursts</p>
+      <h1 style="margin-top:0.8rem" data-ja="山崎 翔太郎" data-zh="山崎翔太郎">Shotaro<br>Yamasaki</h1>
+      <p class="role" data-ja="&lt;strong&gt;台湾国家科学及技術委員会(NSTC)招聘研究員&lt;/strong&gt;&lt;br&gt;国立中興大学 物理学科(台湾)" data-zh="&lt;strong&gt;國科會(NSTC)訪問研究學者&lt;/strong&gt;&lt;br&gt;國立中興大學 物理學系(臺灣)"><strong>NSTC Visiting Research Scholar</strong><br>Department of Physics, National Chung Hsing University, Taiwan</p>
+      <p class="pitch" data-ja="高速電波バースト(FRB)を、マグネターの中心エンジンやバーストの統計から、母銀河、宇宙の電離ガスまで、さまざまなスケールで研究しています。" data-zh="我從多種物理尺度研究快速電波爆發:從磁星的中心引擎與爆發統計,到宿主星系與宇宙中的電離氣體。">I study fast radio bursts across physical scales, from magnetar engines and burst statistics to host galaxies and the ionized Universe.</p>
       <div class="links">
         <a class="pill" href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX ↗</a>
         <a class="pill" href="https://orcid.org/0000-0002-1688-8708" target="_blank" rel="noopener">ORCID ↗</a>
         <a class="pill" href="https://arxiv.org/a/yamasaki_s_1" target="_blank" rel="noopener">arXiv ↗</a>
-        <a class="pill" href="#contact" data-ja="連絡先">Contact</a>
+        <a class="pill" href="#contact" data-ja="連絡先" data-zh="聯絡">Contact</a>
       </div>
     </div>
   </div>
   <div class="wrap statwrap">
     <div class="stats">
-      <div><b>29</b><span data-ja="査読論文(うち筆頭15本)">refereed papers, 15 first-author</span></div>
-      <div><b>872</b><span data-ja="被引用数">citations</span></div>
-      <div><b>16</b><span data-ja="指導した学生(学生主導の論文8本)">students mentored, 8 student-led papers</span></div>
-      <div><b>20</b><span data-ja="招待コロキウム・セミナー">invited colloquia and seminars</span></div>
+      <div><b>29</b><span data-ja="査読論文(うち筆頭15本)" data-zh="篇審查論文(其中第一作者15篇)">refereed papers, 15 first-author</span></div>
+      <div><b>872</b><span data-ja="被引用数" data-zh="次引用">citations</span></div>
+      <div><b>16</b><span data-ja="指導した学生(学生主導の論文8本)" data-zh="位指導學生(學生主導論文8篇)">students mentored, 8 student-led papers</span></div>
+      <div><b>20</b><span data-ja="招待コロキウム・セミナー" data-zh="場受邀演講與研討會">invited colloquia and seminars</span></div>
     </div>
   </div>
 </header>
@@ -222,7 +226,7 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 <main>
 <section id="news">
   <div class="wrap">
-    <div class="head"><p class="label" data-ja="ニュース">News</p><h2 data-ja="最近のニュース">Recent news</h2></div>
+    <div class="head"><p class="label" data-ja="ニュース" data-zh="最新消息">News</p><h2 data-ja="最近のニュース" data-zh="最新消息">Recent news</h2></div>
     <ul class="news" id="newslist"></ul>
   </div>
 </section>
@@ -230,71 +234,71 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 <section id="research">
   <div class="wrap">
     <div class="head">
-      <p class="label" data-ja="研究">Research</p>
-      <h2 data-ja="さまざまなスケールで探る高速電波バースト">Fast radio bursts across physical scales</h2>
-      <p data-ja="高速電波バースト(FRB)は、遠方の銀河から届く1000分の1秒ほどの電波の閃光です。物理モデルと、CHIMEやFASTなどの望遠鏡による大規模データの統計解析を組み合わせて研究しています。研究は互いにつながった4つのテーマからなります。">Fast radio bursts (FRBs) are millisecond radio flashes from distant galaxies. I combine physical models with statistical analysis of large data sets from CHIME, FAST and other telescopes. My work follows four connected themes.</p>
+      <p class="label" data-ja="研究" data-zh="研究">Research</p>
+      <h2 data-ja="さまざまなスケールで探る高速電波バースト" data-zh="從多種尺度探索快速電波爆發">Fast radio bursts across physical scales</h2>
+      <p data-ja="高速電波バースト(FRB)は、遠方の銀河から届く1000分の1秒ほどの電波の閃光です。物理モデルと、CHIMEやFASTなどの望遠鏡による大規模データの統計解析を組み合わせて研究しています。研究は互いにつながった4つのテーマからなります。" data-zh="快速電波爆發(FRB)是來自遙遠星系、僅持續約千分之一秒的電波閃光。我結合物理模型與CHIME、FAST等望遠鏡大量資料的統計分析進行研究。研究分為四個彼此相關的主題。">Fast radio bursts (FRBs) are millisecond radio flashes from distant galaxies. I combine physical models with statistical analysis of large data sets from CHIME, FAST and other telescopes. My work follows four connected themes.</p>
     </div>
 
     <div class="gallery">
-      <figure><img src="img/art-frb.jpg" alt="Artist impression of fast radio bursts arriving at radio telescopes" loading="lazy" width="2000" height="1125"><figcaption data-ja="遠方の銀河から来た高速電波バーストが、地球の電波望遠鏡に届く様子。">Fast radio bursts from distant galaxies reach radio telescopes on Earth.</figcaption></figure>
-      <figure><img src="img/art-magnetar.jpg" alt="Artist impression of a magnetar emitting radio bursts" loading="lazy" width="1400" height="787"><figcaption data-ja="非常に強い磁場をもつ中性子星「マグネター」が、バーストをくり返し放つ様子。">A magnetar, a neutron star with an extreme magnetic field, emits repeated bursts.</figcaption></figure>
-      <figure><img src="img/art-bns.jpg" alt="Artist impression of two merging neutron stars emitting a radio burst" loading="lazy" width="1400" height="787"><figcaption data-ja="2つの中性子星が合体し、放出物にさえぎられる前に電波バーストが抜け出す様子。">Two neutron stars merge, and a radio burst escapes before the ejecta block it.</figcaption></figure>
+      <figure><img src="img/art-frb.jpg" alt="Artist impression of fast radio bursts arriving at radio telescopes" loading="lazy" width="2000" height="1125"><figcaption data-ja="遠方の銀河から来た高速電波バーストが、地球の電波望遠鏡に届く様子。" data-zh="來自遙遠星系的快速電波爆發抵達地球上的電波望遠鏡。">Fast radio bursts from distant galaxies reach radio telescopes on Earth.</figcaption></figure>
+      <figure><img src="img/art-magnetar.jpg" alt="Artist impression of a magnetar emitting radio bursts" loading="lazy" width="1400" height="787"><figcaption data-ja="非常に強い磁場をもつ中性子星「マグネター」が、バーストをくり返し放つ様子。" data-zh="擁有極強磁場的中子星「磁星」反覆發出爆發。">A magnetar, a neutron star with an extreme magnetic field, emits repeated bursts.</figcaption></figure>
+      <figure><img src="img/art-bns.jpg" alt="Artist impression of two merging neutron stars emitting a radio burst" loading="lazy" width="1400" height="787"><figcaption data-ja="2つの中性子星が合体し、放出物にさえぎられる前に電波バーストが抜け出す様子。" data-zh="兩顆中子星合併,電波爆發在被拋射物遮蔽前逸出。">Two neutron stars merge, and a radio burst escapes before the ejecta block it.</figcaption></figure>
     </div>
-    <p class="gcredit" data-ja="イラスト © S. Yamasaki &amp;amp; D. Futselaar(&lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大学のプレスリリース ↗&lt;/a&gt;用に制作)">Illustrations © S. Yamasaki &amp; D. Futselaar, made for a <a href="https://www2.nchu.edu.tw/en-news-detail/id/1047" target="_blank" rel="noopener">NCHU press release ↗</a>.</p>
+    <p class="gcredit" data-ja="イラスト © S. Yamasaki &amp;amp; D. Futselaar(&lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大学のプレスリリース ↗&lt;/a&gt;用に制作)" data-zh="插圖 © S. Yamasaki &amp;amp; D. Futselaar(為&lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大學新聞稿 ↗&lt;/a&gt;製作)">Illustrations © S. Yamasaki &amp; D. Futselaar, made for a <a href="https://www2.nchu.edu.tw/en-news-detail/id/1047" target="_blank" rel="noopener">NCHU press release ↗</a>.</p>
     <figure class="themes-img"><img src="img/themes.jpg" alt="Four panels labelled Origins, Emission, Populations and Cosmology" loading="lazy" width="1600" height="329"></figure>
 
     <article class="theme">
       <div>
-        <p class="label" data-ja="種族">Populations</p>
-        <h3 data-ja="FRBはすべて繰り返すのか?">Do all FRBs repeat?</h3>
-        <p data-ja="新しく見つかった天体は、2回目のバーストが見つかるまでは1回きりに見えます。CHIMEサーベイの時間変化を調べ、1回きりのFRBの検出率が時間とともに下がることを示しました。&lt;strong&gt;FRB天体の最大100%(1σ)、少なくとも50%(2σ)が繰り返し型と矛盾しません。&lt;/strong&gt;">Every new source looks like a one-off until a second burst is seen. I used the time evolution of the CHIME survey to show that the one-off detection rate declines with time. <strong>Up to 100% (1σ) and at least 50% (2σ) of FRB sources are consistent with being repeaters.</strong></p>
-        <p data-ja="現在は、CHIME/FRB第2カタログ(約3,000天体)を選択効果まで含めてモデル化し、繰り返しの頻度と、天体が活動を続ける期間を調べています。">I am now modeling the second CHIME/FRB catalog (about 3,000 sources) with the full selection function, to measure repetition rates and how long sources stay active.</p>
-        <p class="refs" data-ja="Yamasaki et al. 2024, MNRAS 527, 11158 · 台湾総合大学システム 傑出研究賞(2024) · 日本天文学会2025年春季年会(水戸)でプレスリリース · &lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大学のプレスリリース ↗&lt;/a&gt;">Yamasaki et al. 2024, MNRAS 527, 11158 · TCUS Outstanding Research Award 2024 · Press release at the ASJ Spring Meeting 2025 (Mito, Japan) · <a href="https://www2.nchu.edu.tw/en-news-detail/id/1047" target="_blank" rel="noopener">NCHU press release ↗</a></p>
+        <p class="label" data-ja="種族" data-zh="族群">Populations</p>
+        <h3 data-ja="FRBはすべて繰り返すのか?" data-zh="所有FRB都會重複嗎?">Do all FRBs repeat?</h3>
+        <p data-ja="新しく見つかった天体は、2回目のバーストが見つかるまでは1回きりに見えます。CHIMEサーベイの時間変化を調べ、1回きりのFRBの検出率が時間とともに下がることを示しました。&lt;strong&gt;FRB天体の最大100%(1σ)、少なくとも50%(2σ)が繰り返し型と矛盾しません。&lt;/strong&gt;" data-zh="新發現的源在觀測到第二次爆發之前,看起來都像只爆發一次。我利用CHIME巡天的時間演化,證明單次FRB的偵測率會隨時間下降。&lt;strong&gt;最多100%(1σ)、至少50%(2σ)的FRB源與重複源相符。&lt;/strong&gt;">Every new source looks like a one-off until a second burst is seen. I used the time evolution of the CHIME survey to show that the one-off detection rate declines with time. <strong>Up to 100% (1σ) and at least 50% (2σ) of FRB sources are consistent with being repeaters.</strong></p>
+        <p data-ja="現在は、CHIME/FRB第2カタログ(約3,000天体)を選択効果まで含めてモデル化し、繰り返しの頻度と、天体が活動を続ける期間を調べています。" data-zh="目前我正以完整的選擇效應模擬CHIME/FRB第二版星表(約3,000個源),以測量重複頻率以及源持續活動的時間。">I am now modeling the second CHIME/FRB catalog (about 3,000 sources) with the full selection function, to measure repetition rates and how long sources stay active.</p>
+        <p class="refs" data-ja="Yamasaki et al. 2024, MNRAS 527, 11158 · 台湾総合大学システム 傑出研究賞(2024) · 日本天文学会2025年春季年会(水戸)でプレスリリース · &lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大学のプレスリリース ↗&lt;/a&gt;" data-zh="Yamasaki et al. 2024, MNRAS 527, 11158 · 臺灣綜合大學系統 年輕學者傑出研究獎(2024) · 於日本天文學會2025年春季年會(水戶)發布新聞稿 · &lt;a href=&quot;https://www2.nchu.edu.tw/en-news-detail/id/1047&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;中興大學新聞稿 ↗&lt;/a&gt;">Yamasaki et al. 2024, MNRAS 527, 11158 · TCUS Outstanding Research Award 2024 · Press release at the ASJ Spring Meeting 2025 (Mito, Japan) · <a href="https://www2.nchu.edu.tw/en-news-detail/id/1047" target="_blank" rel="noopener">NCHU press release ↗</a></p>
       </div>
-      <figure><img src="img/repeaters.jpg" alt="Detection rate of one-off and repeating CHIME sources versus operation time" loading="lazy" width="1400" height="626"><figcaption data-ja="CHIMEの運用時間に対する、1回きりに見える天体(実線)と繰り返し天体(破線)の検出率。ゆっくり繰り返す天体が見つかるにつれ、1回きりの天体の検出率が下がる。">Detection rate of apparently one-off (solid) and repeating (dashed) CHIME sources versus operation time. The one-off rate drops as slow repeaters are revealed.</figcaption></figure>
+      <figure><img src="img/repeaters.jpg" alt="Detection rate of one-off and repeating CHIME sources versus operation time" loading="lazy" width="1400" height="626"><figcaption data-ja="CHIMEの運用時間に対する、1回きりに見える天体(実線)と繰り返し天体(破線)の検出率。ゆっくり繰り返す天体が見つかるにつれ、1回きりの天体の検出率が下がる。" data-zh="CHIME中看似單次(實線)與重複(虛線)的源,其偵測率隨運作時間的變化。隨著緩慢重複的源被發現,單次源的偵測率下降。">Detection rate of apparently one-off (solid) and repeating (dashed) CHIME sources versus operation time. The one-off rate drops as slow repeaters are revealed.</figcaption></figure>
     </article>
 
     <article class="theme">
       <div>
-        <p class="label" data-ja="放射">Emission</p>
-        <h3 data-ja="バーストは地震の余震のようにふるまう">Bursts behave like earthquake aftershocks</h3>
-        <p data-ja="東京大学の戸谷友則教授との共同研究で、宇宙論で使われる二点相関関数を、繰り返しFRBのバースト列に応用しました。FASTで観測された4,000以上のバーストから、&lt;strong&gt;約0.3秒以内の余震は本震よりピーク周波数が低くなる傾向があることを、最大9σで見つけました。&lt;/strong&gt;">In joint work with Professor Tomonori Totani (University of Tokyo), I brought the two-point correlation function from cosmology to burst sequences of repeating FRBs. With more than 4,000 bursts observed by FAST, <strong>I found that aftershocks within about 0.3 s tend to have lower peak frequencies than their mainshocks, at up to 9σ.</strong></p>
-        <p data-ja="また、マグネターのバースト、FRB、太陽フレア、地震のカオス性とランダム性を比べたほか、バーストがマグネターの放出物から抜け出す過程もモデル化しています。">I also compared chaos and randomness in magnetar bursts, FRBs, solar flares and earthquakes, and I model how bursts escape magnetar outflows.</p>
+        <p class="label" data-ja="放射" data-zh="輻射">Emission</p>
+        <h3 data-ja="バーストは地震の余震のようにふるまう" data-zh="爆發的行為就像地震的餘震">Bursts behave like earthquake aftershocks</h3>
+        <p data-ja="東京大学の戸谷友則教授との共同研究で、宇宙論で使われる二点相関関数を、繰り返しFRBのバースト列に応用しました。FASTで観測された4,000以上のバーストから、&lt;strong&gt;約0.3秒以内の余震は本震よりピーク周波数が低くなる傾向があることを、最大9σで見つけました。&lt;/strong&gt;" data-zh="我與東京大學戶谷友則教授合作,將宇宙學中的兩點相關函數應用於重複FRB的爆發序列。利用FAST觀測到的4,000多次爆發,&lt;strong&gt;我發現約0.3秒內的餘震,其峰值頻率傾向低於主震,顯著性最高達9σ。&lt;/strong&gt;">In joint work with Professor Tomonori Totani (University of Tokyo), I brought the two-point correlation function from cosmology to burst sequences of repeating FRBs. With more than 4,000 bursts observed by FAST, <strong>I found that aftershocks within about 0.3 s tend to have lower peak frequencies than their mainshocks, at up to 9σ.</strong></p>
+        <p data-ja="また、マグネターのバースト、FRB、太陽フレア、地震のカオス性とランダム性を比べたほか、バーストがマグネターの放出物から抜け出す過程もモデル化しています。" data-zh="我也比較了磁星爆發、FRB、太陽閃焰與地震的混沌性與隨機性,並模擬爆發如何穿出磁星的外流。">I also compared chaos and randomness in magnetar bursts, FRBs, solar flares and earthquakes, and I model how bursts escape magnetar outflows.</p>
         <p class="refs">Yamasaki &amp; Totani 2025, ApJL 983, L16 · Yamasaki, Gogus &amp; Hashimoto 2024, MNRAS Letters 528, L133</p>
       </div>
-      <figure><img src="img/correlation.jpg" alt="Chaos versus randomness plane, and time-frequency correlation of FRB 20201124A" loading="lazy" width="1400" height="552"><figcaption data-ja="左:突発天体のカオス性–ランダム性の図。右:FRB 20201124Aのバーストの時間–周波数相関。観測データ(マゼンタ)と、ピーク周波数を入れ替えたデータ(青緑)。">Left: chaos–randomness plane of transients. Right: time–frequency correlation of FRB 20201124A bursts, data (magenta) versus shuffled peak frequencies (teal).</figcaption></figure>
+      <figure><img src="img/correlation.jpg" alt="Chaos versus randomness plane, and time-frequency correlation of FRB 20201124A" loading="lazy" width="1400" height="552"><figcaption data-ja="左:突発天体のカオス性–ランダム性の図。右:FRB 20201124Aのバーストの時間–周波数相関。観測データ(マゼンタ)と、ピーク周波数を入れ替えたデータ(青緑)。" data-zh="左:暫現天體的混沌性–隨機性圖。右:FRB 20201124A爆發的時間–頻率相關,觀測資料(洋紅)與打亂峰值頻率後的資料(青綠)。">Left: chaos–randomness plane of transients. Right: time–frequency correlation of FRB 20201124A bursts, data (magenta) versus shuffled peak frequencies (teal).</figcaption></figure>
     </article>
 
     <article class="theme">
       <div>
-        <p class="label" data-ja="起源">Origins</p>
-        <h3 data-ja="FRBは金属量によらずどんな銀河でも生まれる">FRBs form in galaxies of any metallicity</h3>
-        <p data-ja="金属量は星の進化を左右するため、FRBを生み出すコンパクト天体のでき方にも影響するはずです。つまり、母銀河の大局的な性質は、FRBの起源を知る手がかりになります。そこで、49個のFRB母銀河のガスの金属量を測り、星形成銀河のモデル集団と比べました。&lt;strong&gt;FRBの母銀河は、金属量の低い銀河も高い銀河も特に好みません。&lt;/strong&gt;これは、金属量によらず働く形成過程を支持します。">Metallicity shapes how stars evolve, so it should also affect how the compact objects behind FRBs are born. The global properties of host galaxies therefore hold clues to the origin of FRBs. I measured the gas-phase metallicity of 49 FRB host galaxies and compared them with model populations of star-forming galaxies. <strong>FRB hosts show no preference for metal-poor or metal-rich galaxies.</strong> This favors progenitor channels that work at any metallicity.</p>
-        <p data-ja="この結果を受けて、現在は東京大学の日下部晴香助教授(PI)と台湾の学部学生2人と、すばる望遠鏡FOCAS IFUの観測プログラムを進めています(私はCo-PI)。15個のFRB母銀河で、FRBが発生した場所の局所的な環境を調べることで、FRBの起源天体にもう一歩踏み込もうとしています。">Building on this result, I am now running a Subaru/FOCAS IFU program with Assistant Professor Haruka Kusakabe (University of Tokyo, PI) and two undergraduate students in Taiwan. I am Co-PI. By studying the local environments where FRBs occur in 15 host galaxies, we aim to take a step closer to the sources that produce FRBs.</p>
+        <p class="label" data-ja="起源" data-zh="起源">Origins</p>
+        <h3 data-ja="FRBは金属量によらずどんな銀河でも生まれる" data-zh="FRB在任何金屬量的星系中都會形成">FRBs form in galaxies of any metallicity</h3>
+        <p data-ja="金属量は星の進化を左右するため、FRBを生み出すコンパクト天体のでき方にも影響するはずです。つまり、母銀河の大局的な性質は、FRBの起源を知る手がかりになります。そこで、49個のFRB母銀河のガスの金属量を測り、星形成銀河のモデル集団と比べました。&lt;strong&gt;FRBの母銀河は、金属量の低い銀河も高い銀河も特に好みません。&lt;/strong&gt;これは、金属量によらず働く形成過程を支持します。" data-zh="金屬量會影響恆星演化,因此也應會影響產生FRB的緻密天體如何形成。換言之,宿主星系的整體性質是了解FRB起源的線索。我測量了49個FRB宿主星系的氣體金屬量,並與恆星形成星系的模型族群比較。&lt;strong&gt;FRB宿主星系並不偏好低金屬量或高金屬量的星系。&lt;/strong&gt;這支持在任何金屬量下都能運作的形成途徑。">Metallicity shapes how stars evolve, so it should also affect how the compact objects behind FRBs are born. The global properties of host galaxies therefore hold clues to the origin of FRBs. I measured the gas-phase metallicity of 49 FRB host galaxies and compared them with model populations of star-forming galaxies. <strong>FRB hosts show no preference for metal-poor or metal-rich galaxies.</strong> This favors progenitor channels that work at any metallicity.</p>
+        <p data-ja="この結果を受けて、現在は東京大学の日下部晴香助教授(PI)と台湾の学部学生2人と、すばる望遠鏡FOCAS IFUの観測プログラムを進めています(私はCo-PI)。15個のFRB母銀河で、FRBが発生した場所の局所的な環境を調べることで、FRBの起源天体にもう一歩踏み込もうとしています。" data-zh="基於此結果,我目前與東京大學日下部晴香助理教授(PI)及兩位臺灣大學部學生,執行速霸陸望遠鏡FOCAS IFU觀測計畫,我擔任Co-PI。我們研究15個宿主星系中FRB發生位置的局部環境,希望更進一步接近產生FRB的天體。">Building on this result, I am now running a Subaru/FOCAS IFU program with Assistant Professor Haruka Kusakabe (University of Tokyo, PI) and two undergraduate students in Taiwan. I am Co-PI. By studying the local environments where FRBs occur in 15 host galaxies, we aim to take a step closer to the sources that produce FRBs.</p>
         <p class="refs">Yamasaki et al. 2026, ApJL 997, L6</p>
       </div>
-      <figure><img src="img/metallicity.jpg" alt="Stellar mass, star-formation rate and metallicity of FRB hosts compared with model galaxy populations" loading="lazy" width="900" height="742"><figcaption data-ja="FRB母銀河(青)と、星形成率で重みづけした星形成銀河(マゼンタ)、星質量で重みづけしたもの(オレンジ)、重みなし(緑)の比較。">FRB hosts (blue) compared with star-forming galaxies weighted by star-formation rate (magenta), stellar mass (orange), or unweighted (green).</figcaption></figure>
+      <figure><img src="img/metallicity.jpg" alt="Stellar mass, star-formation rate and metallicity of FRB hosts compared with model galaxy populations" loading="lazy" width="900" height="742"><figcaption data-ja="FRB母銀河(青)と、星形成率で重みづけした星形成銀河(マゼンタ)、星質量で重みづけしたもの(オレンジ)、重みなし(緑)の比較。" data-zh="FRB宿主星系(藍)與以恆星形成率加權(洋紅)、以恆星質量加權(橘)及未加權(綠)的恆星形成星系比較。">FRB hosts (blue) compared with star-forming galaxies weighted by star-formation rate (magenta), stellar mass (orange), or unweighted (green).</figcaption></figure>
     </article>
 
     <article class="theme">
       <div>
-        <p class="label" data-ja="宇宙論と理論">Cosmology and theory</p>
-        <h3 data-ja="中性子星合体から天の川銀河のハローまで">From neutron star mergers to the Milky Way halo</h3>
-        <p data-ja="博士課程では、連星中性子星の合体からFRBが出るモデルを提案し、信号が合体の放出物を抜け出せる約1ミリ秒の時間帯があることを示しました。また、天の川銀河ハローの分散量度のモデルを作りました。&lt;strong&gt;このモデルは公開パッケージPyGEDMに組み込まれ、約170回引用されています。&lt;/strong&gt;">In my PhD I proposed FRBs from binary neutron star mergers and showed that a 1 ms window exists in which the signal escapes the merger ejecta. I also built a model of the dispersion measure of the Milky Way halo. <strong>It is included in the public package PyGEDM and has been cited about 170 times.</strong></p>
-        <p data-ja="位置の決まったFRBを使い、DM–赤方偏移関係から近傍の巨大ボイドを検証しています。これはハッブル定数問題にも関わります。">With localized FRBs, I am testing for a local void in the DM–redshift relation, which bears on the Hubble tension.</p>
+        <p class="label" data-ja="宇宙論と理論" data-zh="宇宙學與理論">Cosmology and theory</p>
+        <h3 data-ja="中性子星合体から天の川銀河のハローまで" data-zh="從中子星合併到銀河系暈">From neutron star mergers to the Milky Way halo</h3>
+        <p data-ja="博士課程では、連星中性子星の合体からFRBが出るモデルを提案し、信号が合体の放出物を抜け出せる約1ミリ秒の時間帯があることを示しました。また、天の川銀河ハローの分散量度のモデルを作りました。&lt;strong&gt;このモデルは公開パッケージPyGEDMに組み込まれ、約170回引用されています。&lt;/strong&gt;" data-zh="博士期間,我提出FRB源自雙中子星合併的模型,並指出存在約1毫秒的時間窗,訊號可在此期間穿出合併拋射物。我也建立了銀河系暈色散量的模型。&lt;strong&gt;此模型已收錄於公開套件PyGEDM,被引用約170次。&lt;/strong&gt;">In my PhD I proposed FRBs from binary neutron star mergers and showed that a 1 ms window exists in which the signal escapes the merger ejecta. I also built a model of the dispersion measure of the Milky Way halo. <strong>It is included in the public package PyGEDM and has been cited about 170 times.</strong></p>
+        <p data-ja="位置の決まったFRBを使い、DM–赤方偏移関係から近傍の巨大ボイドを検証しています。これはハッブル定数問題にも関わります。" data-zh="我利用已定位的FRB,透過DM–紅移關係檢驗鄰近的巨大空洞,這與哈伯常數張力問題有關。">With localized FRBs, I am testing for a local void in the DM–redshift relation, which bears on the Hubble tension.</p>
         <p class="refs">Yamasaki, Totani &amp; Kiuchi 2018, PASJ 70, 39 · Yamasaki &amp; Totani 2020, ApJ 888, 105</p>
       </div>
-      <figure><img src="img/bns-halo.jpg" alt="Neutron star merger model and all-sky map of the Milky Way halo dispersion measure" loading="lazy" width="1400" height="528"><figcaption data-ja="左:合体する中性子星の角速度と放出物の柱密度。灰色の時間帯にFRBが抜け出せる。右:天の川銀河ハローのDMの全天図。">Left: angular velocities of merging neutron stars and the ejecta column density. FRBs can escape in the grey window. Right: all-sky map of the Milky Way halo DM.</figcaption></figure>
+      <figure><img src="img/bns-halo.jpg" alt="Neutron star merger model and all-sky map of the Milky Way halo dispersion measure" loading="lazy" width="1400" height="528"><figcaption data-ja="左:合体する中性子星の角速度と放出物の柱密度。灰色の時間帯にFRBが抜け出せる。右:天の川銀河ハローのDMの全天図。" data-zh="左:合併中子星的角速度與拋射物柱密度,FRB可在灰色時間窗中逸出。右:銀河系暈DM的全天圖。">Left: angular velocities of merging neutron stars and the ejecta column density. FRBs can escape in the grey window. Right: all-sky map of the Milky Way halo DM.</figcaption></figure>
     </article>
 
     <article class="theme">
       <div>
-        <p class="label" data-ja="FRB以外の研究">Beyond FRBs</p>
-        <h3 data-ja="奇妙な電波リング、マグネターフレア、ガンマ線バースト">Odd radio circles, magnetar flares and GRBs</h3>
-        <p data-ja="奇妙な電波リング(ORC)は大質量銀河を囲むビリアル衝撃波である、と提案しました。観測される薄い殻には宇宙線の速い拡散が必要で、銀河周辺のガスが低密度であることを示します。ほかに、マグネターの巨大フレアのスペクトルや、GRB 190114CのTeV残光もモデル化しました。">I proposed that odd radio circles are virial shocks around massive galaxies. The thin observed shells require fast cosmic-ray diffusion, which points to a low-density circumgalactic medium. I have also modeled the spectra of magnetar giant flares and the TeV afterglow of GRB 190114C.</p>
+        <p class="label" data-ja="FRB以外の研究" data-zh="FRB以外的研究">Beyond FRBs</p>
+        <h3 data-ja="奇妙な電波リング、マグネターフレア、ガンマ線バースト" data-zh="奇異電波環、磁星閃焰與伽瑪射線爆發">Odd radio circles, magnetar flares and GRBs</h3>
+        <p data-ja="奇妙な電波リング(ORC)は大質量銀河を囲むビリアル衝撃波である、と提案しました。観測される薄い殻には宇宙線の速い拡散が必要で、銀河周辺のガスが低密度であることを示します。ほかに、マグネターの巨大フレアのスペクトルや、GRB 190114CのTeV残光もモデル化しました。" data-zh="我提出奇異電波環(ORC)是大質量星系周圍的維里激波。觀測到的薄殼需要宇宙線快速擴散,顯示星系周圍介質密度很低。我也模擬了磁星巨型閃焰的能譜,以及GRB 190114C的TeV餘暉。">I proposed that odd radio circles are virial shocks around massive galaxies. The thin observed shells require fast cosmic-ray diffusion, which points to a low-density circumgalactic medium. I have also modeled the spectra of magnetar giant flares and the TeV afterglow of GRB 190114C.</p>
         <p class="refs">Yamasaki, Sarkar &amp; Li 2024, MNRAS 528, 3854 · Yamasaki &amp; Piran 2022, MNRAS 512, 2142</p>
       </div>
-      <figure><img src="img/orc.jpg" alt="Odd radio circle image, virial shock schematic and surface brightness profiles" loading="lazy" width="1400" height="487"><figcaption data-ja="奇妙な電波リング、ビリアル衝撃波の模式図、宇宙線の拡散と移流の場合の表面輝度のモデル。">An odd radio circle, a schematic of a virial shock, and model surface-brightness profiles for cosmic-ray diffusion and advection.</figcaption></figure>
+      <figure><img src="img/orc.jpg" alt="Odd radio circle image, virial shock schematic and surface brightness profiles" loading="lazy" width="1400" height="487"><figcaption data-ja="奇妙な電波リング、ビリアル衝撃波の模式図、宇宙線の拡散と移流の場合の表面輝度のモデル。" data-zh="奇異電波環、維里激波示意圖,以及宇宙線擴散與平流情況下的表面亮度模型。">An odd radio circle, a schematic of a virial shock, and model surface-brightness profiles for cosmic-ray diffusion and advection.</figcaption></figure>
     </article>
   </div>
 </section>
@@ -302,46 +306,46 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 <section id="publications">
   <div class="wrap">
     <div class="head">
-      <p class="label" data-ja="論文">Publications</p>
-      <h2 data-ja="査読論文">Refereed papers</h2>
-      <p data-ja="被引用数は2026年10月時点の各論文誌のサイトによります。全体は&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;をご覧ください。">Citation counts are from journal websites as of October 2026. For the full record, see <a href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX</a>.</p>
+      <p class="label" data-ja="論文" data-zh="論文">Publications</p>
+      <h2 data-ja="査読論文" data-zh="審查論文">Refereed papers</h2>
+      <p data-ja="被引用数は2026年10月時点の各論文誌のサイトによります。全体は&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;をご覧ください。" data-zh="引用次數取自各期刊網站(2026年10月)。完整列表請見&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;。">Citation counts are from journal websites as of October 2026. For the full record, see <a href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX</a>.</p>
     </div>
     <div class="filters" role="group" aria-label="Filter publications">
-      <button type="button" id="f-rep" data-f="rep" aria-pressed="true" data-ja="代表論文(5)">Representative (5)</button>
-      <button type="button" id="f-first" data-f="first" aria-pressed="false" data-ja="筆頭著者(15)">First-author (15)</button>
-      <button type="button" id="f-co" data-f="co" aria-pressed="false" data-ja="共著(14)">Co-authored (14)</button>
-      <button type="button" id="f-all" data-f="all" aria-pressed="false" data-ja="すべて(30)">All (30)</button>
+      <button type="button" id="f-rep" data-f="rep" aria-pressed="true" data-ja="代表論文(5)" data-zh="代表論文(5)">Representative (5)</button>
+      <button type="button" id="f-first" data-f="first" aria-pressed="false" data-ja="筆頭著者(15)" data-zh="第一作者(15)">First-author (15)</button>
+      <button type="button" id="f-co" data-f="co" aria-pressed="false" data-ja="共著(14)" data-zh="共同作者(14)">Co-authored (14)</button>
+      <button type="button" id="f-all" data-f="all" aria-pressed="false" data-ja="すべて(30)" data-zh="全部(30)">All (30)</button>
     </div>
     <ol class="pubs" id="pubs"></ol>
-    <p class="pubnote" data-ja="&lt;span class=&quot;tag rep&quot;&gt;Representative&lt;/span&gt; 代表論文 · &lt;span class=&quot;tag stu&quot;&gt;Student-led&lt;/span&gt; 指導・共同指導した学生が主導した論文"><span class="tag rep">Representative</span> selected papers · <span class="tag stu">Student-led</span> paper led by a student I supervised or co-supervised</p>
+    <p class="pubnote" data-ja="&lt;span class=&quot;tag rep&quot;&gt;Representative&lt;/span&gt; 代表論文 · &lt;span class=&quot;tag stu&quot;&gt;Student-led&lt;/span&gt; 指導・共同指導した学生が主導した論文" data-zh="&lt;span class=&quot;tag rep&quot;&gt;Representative&lt;/span&gt; 代表論文 · &lt;span class=&quot;tag stu&quot;&gt;Student-led&lt;/span&gt; 由我指導或共同指導的學生主導的論文"><span class="tag rep">Representative</span> selected papers · <span class="tag stu">Student-led</span> paper led by a student I supervised or co-supervised</p>
   </div>
 </section>
 
 <section id="mentoring">
   <div class="wrap">
     <div class="head">
-      <p class="label" data-ja="学生指導と教育">Mentoring and teaching</p>
-      <h2 data-ja="論文を書く学生たち">Students who publish</h2>
+      <p class="label" data-ja="学生指導と教育" data-zh="學生指導與教學">Mentoring and teaching</p>
+      <h2 data-ja="論文を書く学生たち" data-zh="發表論文的學生們">Students who publish</h2>
     </div>
-    <p class="mentor-intro" data-ja="台湾、日本、トルコの&lt;strong&gt;16人の学生&lt;/strong&gt;(大学院生9人、学部生7人)を指導・共同指導してきました。天文学の経験がほとんどない状態から始めた学生も多くいます。&lt;strong&gt;彼らは私と一緒に8本の査読論文を主導し、3人が学生研究賞を受賞しました。&lt;/strong&gt;">I have supervised or co-supervised <strong>16 students</strong> from Taiwan, Japan and Turkey (9 graduate, 7 undergraduate). Many started with little astronomy background. <strong>They led 8 refereed papers with me, and three won student research awards.</strong></p>
+    <p class="mentor-intro" data-ja="台湾、日本、トルコの&lt;strong&gt;16人の学生&lt;/strong&gt;(大学院生9人、学部生7人)を指導・共同指導してきました。天文学の経験がほとんどない状態から始めた学生も多くいます。&lt;strong&gt;彼らは私と一緒に8本の査読論文を主導し、3人が学生研究賞を受賞しました。&lt;/strong&gt;" data-zh="我指導或共同指導過來自臺灣、日本與土耳其的&lt;strong&gt;16位學生&lt;/strong&gt;(研究生9位、大學部7位)。許多人起初幾乎沒有天文背景。&lt;strong&gt;他們與我合作主導了8篇審查論文,其中3位獲得學生研究獎。&lt;/strong&gt;">I have supervised or co-supervised <strong>16 students</strong> from Taiwan, Japan and Turkey (9 graduate, 7 undergraduate). Many started with little astronomy background. <strong>They led 8 refereed papers with me, and three won student research awards.</strong></p>
     <div class="grid2">
-      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;清華大学 学部生 → スインバーン工科大学&lt;/p&gt;&lt;h3&gt;FRBで探る宇宙のバリオン&lt;/h3&gt;&lt;p&gt;Tzuyin Hsuさんは、位置の決まったFRBで宇宙のバリオンのゆらぎを調べたA&amp;amp;A論文を主導し、学生研究賞を受賞しました。&lt;/p&gt;"><p class="who">NTHU undergraduate → Swinburne</p><h3>Cosmic baryons with FRBs</h3><p>Tzuyin Hsu led an A&amp;A paper on cosmological baryon fluctuations probed by localized FRBs, and won student research awards.</p></div>
-      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;清華大学 学部生 → 台湾大学&lt;/p&gt;&lt;h3&gt;BURSTTで期待される銀河系内FRBの頻度&lt;/h3&gt;&lt;p&gt;Decmend F.-J. Lingさんは天文学の経験がない状態から始め、BURSTTで期待される銀河系内FRBの検出頻度についてのMNRAS論文を主導しました。&lt;/p&gt;"><p class="who">NTHU undergraduate → NTU</p><h3>Galactic FRB rate for BURSTT</h3><p>Decmend F.-J. Ling started with no astronomy background and led an MNRAS paper on the Galactic FRB rate expected for BURSTT.</p></div>
-      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;中興大学 博士課程&lt;/p&gt;&lt;h3&gt;FRBの周辺環境&lt;/h3&gt;&lt;p&gt;Vignesh V. V. Raoさんは、銀河の数密度からFRBの環境を推定するPASP論文を主導し、ASROC 2025で最優秀口頭発表賞を受賞しました。&lt;/p&gt;"><p class="who">NCHU PhD student</p><h3>FRB environments</h3><p>Vignesh V. V. Rao led a PASP paper inferring FRB environments from galaxy number density, and won the Best Oral Presentation Award at ASROC 2025.</p></div>
-      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;サバンジュ大学 博士課程&lt;/p&gt;&lt;h3&gt;マグネターバーストの分光&lt;/h3&gt;&lt;p&gt;Özge KeskinさんとMustafa Demirerさんは、私のマグネターバーストのモデルを用いて、SGR J1935+2154とSGR J1550−5418についての2本のApJ論文を書きました。&lt;/p&gt;"><p class="who">Sabancı University PhD students</p><h3>Magnetar burst spectroscopy</h3><p>Özge Keskin and Mustafa Demirer applied my magnetar burst models in two ApJ papers on SGR J1935+2154 and SGR J1550−5418.</p></div>
+      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;清華大学 学部生 → スインバーン工科大学&lt;/p&gt;&lt;h3&gt;FRBで探る宇宙のバリオン&lt;/h3&gt;&lt;p&gt;Tzuyin Hsuさんは、位置の決まったFRBで宇宙のバリオンのゆらぎを調べたA&amp;amp;A論文を主導し、学生研究賞を受賞しました。&lt;/p&gt;" data-zh="&lt;p class=&quot;who&quot;&gt;清華大學 大學部 → 斯威本科技大學&lt;/p&gt;&lt;h3&gt;以FRB探測宇宙重子&lt;/h3&gt;&lt;p&gt;Tzuyin Hsu主導了一篇A&amp;amp;A論文,利用已定位的FRB研究宇宙重子擾動,並獲得學生研究獎。&lt;/p&gt;"><p class="who">NTHU undergraduate → Swinburne</p><h3>Cosmic baryons with FRBs</h3><p>Tzuyin Hsu led an A&amp;A paper on cosmological baryon fluctuations probed by localized FRBs, and won student research awards.</p></div>
+      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;清華大学 学部生 → 台湾大学&lt;/p&gt;&lt;h3&gt;BURSTTで期待される銀河系内FRBの頻度&lt;/h3&gt;&lt;p&gt;Decmend F.-J. Lingさんは天文学の経験がない状態から始め、BURSTTで期待される銀河系内FRBの検出頻度についてのMNRAS論文を主導しました。&lt;/p&gt;" data-zh="&lt;p class=&quot;who&quot;&gt;清華大學 大學部 → 臺灣大學&lt;/p&gt;&lt;h3&gt;BURSTT預期的銀河系內FRB發生率&lt;/h3&gt;&lt;p&gt;Decmend F.-J. Ling從零天文背景起步,主導了一篇關於BURSTT預期銀河系內FRB偵測率的MNRAS論文。&lt;/p&gt;"><p class="who">NTHU undergraduate → NTU</p><h3>Galactic FRB rate for BURSTT</h3><p>Decmend F.-J. Ling started with no astronomy background and led an MNRAS paper on the Galactic FRB rate expected for BURSTT.</p></div>
+      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;中興大学 博士課程&lt;/p&gt;&lt;h3&gt;FRBの周辺環境&lt;/h3&gt;&lt;p&gt;Vignesh V. V. Raoさんは、銀河の数密度からFRBの環境を推定するPASP論文を主導し、ASROC 2025で最優秀口頭発表賞を受賞しました。&lt;/p&gt;" data-zh="&lt;p class=&quot;who&quot;&gt;中興大學 博士生&lt;/p&gt;&lt;h3&gt;FRB所處環境&lt;/h3&gt;&lt;p&gt;Vignesh V. V. Rao主導了一篇由星系數密度推斷FRB環境的PASP論文,並獲得ASROC 2025最佳口頭報告獎。&lt;/p&gt;"><p class="who">NCHU PhD student</p><h3>FRB environments</h3><p>Vignesh V. V. Rao led a PASP paper inferring FRB environments from galaxy number density, and won the Best Oral Presentation Award at ASROC 2025.</p></div>
+      <div class="card" data-ja="&lt;p class=&quot;who&quot;&gt;サバンジュ大学 博士課程&lt;/p&gt;&lt;h3&gt;マグネターバーストの分光&lt;/h3&gt;&lt;p&gt;Özge KeskinさんとMustafa Demirerさんは、私のマグネターバーストのモデルを用いて、SGR J1935+2154とSGR J1550−5418についての2本のApJ論文を書きました。&lt;/p&gt;" data-zh="&lt;p class=&quot;who&quot;&gt;薩班哲大學 博士生&lt;/p&gt;&lt;h3&gt;磁星爆發能譜&lt;/h3&gt;&lt;p&gt;Özge Keskin與Mustafa Demirer運用我的磁星爆發模型,發表了兩篇關於SGR J1935+2154與SGR J1550−5418的ApJ論文。&lt;/p&gt;"><p class="who">Sabancı University PhD students</p><h3>Magnetar burst spectroscopy</h3><p>Özge Keskin and Mustafa Demirer applied my magnetar burst models in two ApJ papers on SGR J1935+2154 and SGR J1550−5418.</p></div>
     </div>
     <div class="cols" style="margin-top:2.5rem">
       <div>
-        <h3 data-ja="授業">Teaching</h3>
+        <h3 data-ja="授業" data-zh="教學">Teaching</h3>
         <dl class="tl">
-          <dt>2023, 2024</dt><dd data-ja="物理学実験、中興大学&lt;small&gt;「P–Ṗ図で理解する中性子星の種族」を設計し担当&lt;/small&gt;">Physics laboratory course, NCHU<small>Designed and taught “Understanding Neutron Star Populations on the P–Ṗ Diagram”</small></dd>
-          <dt>2025</dt><dd data-ja="TARAサマースクール&lt;small&gt;VLT/MUSEデータを使ったFRB母銀河の実習を共同で設計&lt;/small&gt;">TARA summer school<small>Co-designed a program on FRB host galaxies with VLT/MUSE data</small></dd>
-          <dt>2018, 2019</dt><dd data-ja="ティーチングアシスタント、東京大学&lt;small&gt;計算天体物理学&lt;/small&gt;">Teaching assistant, The University of Tokyo<small>Computational Astrophysics</small></dd>
+          <dt>2023, 2024</dt><dd data-ja="物理学実験、中興大学&lt;small&gt;「P–Ṗ図で理解する中性子星の種族」を設計し担当&lt;/small&gt;" data-zh="普通物理實驗,中興大學&lt;small&gt;設計並教授「以P–Ṗ圖理解中子星族群」&lt;/small&gt;">Physics laboratory course, NCHU<small>Designed and taught “Understanding Neutron Star Populations on the P–Ṗ Diagram”</small></dd>
+          <dt>2025</dt><dd data-ja="TARAサマースクール&lt;small&gt;VLT/MUSEデータを使ったFRB母銀河の実習を共同で設計&lt;/small&gt;" data-zh="TARA暑期學校&lt;small&gt;共同設計以VLT/MUSE資料研究FRB宿主星系的課程&lt;/small&gt;">TARA summer school<small>Co-designed a program on FRB host galaxies with VLT/MUSE data</small></dd>
+          <dt>2018, 2019</dt><dd data-ja="ティーチングアシスタント、東京大学&lt;small&gt;計算天体物理学&lt;/small&gt;" data-zh="教學助理,東京大學&lt;small&gt;計算天文物理&lt;/small&gt;">Teaching assistant, The University of Tokyo<small>Computational Astrophysics</small></dd>
         </dl>
       </div>
       <div>
-        <h3 data-ja="担当できる授業">Courses I can teach</h3>
-        <p style="color:var(--muted); font-size:0.93rem" data-ja="高エネルギー宇宙物理学 · 放射過程 · コンパクト天体 · 電波天文学 · 時間領域天文学 · 宇宙論 · 天文学のためのベイズ推定と機械学習 · 電磁気学 · 統計力学 · 量子力学">High-Energy Astrophysics · Radiative Processes · Compact Objects · Radio Astronomy · Time-Domain Astrophysics · Cosmology · Bayesian Inference and Machine Learning for Astronomy · Electromagnetism · Statistical Mechanics · Quantum Mechanics</p>
+        <h3 data-ja="担当できる授業" data-zh="可開設的課程">Courses I can teach</h3>
+        <p style="color:var(--muted); font-size:0.93rem" data-ja="高エネルギー宇宙物理学 · 放射過程 · コンパクト天体 · 電波天文学 · 時間領域天文学 · 宇宙論 · 天文学のためのベイズ推定と機械学習 · 電磁気学 · 統計力学 · 量子力学" data-zh="高能天文物理 · 輻射過程 · 緻密天體 · 電波天文學 · 時域天文學 · 宇宙學 · 天文學中的貝氏推論與機器學習 · 電磁學 · 統計力學 · 量子力學">High-Energy Astrophysics · Radiative Processes · Compact Objects · Radio Astronomy · Time-Domain Astrophysics · Cosmology · Bayesian Inference and Machine Learning for Astronomy · Electromagnetism · Statistical Mechanics · Quantum Mechanics</p>
       </div>
     </div>
   </div>
@@ -349,37 +353,37 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 
 <section id="career">
   <div class="wrap">
-    <div class="head"><p class="label" data-ja="経歴">Career</p><h2 data-ja="職歴・研究費・受賞">Positions, grants and awards</h2></div>
+    <div class="head"><p class="label" data-ja="経歴" data-zh="經歷">Career</p><h2 data-ja="職歴・研究費・受賞" data-zh="職位、研究計畫與獲獎">Positions, grants and awards</h2></div>
     <div class="cols">
       <div>
-        <h3 data-ja="職歴">Positions</h3>
+        <h3 data-ja="職歴" data-zh="職位">Positions</h3>
         <dl class="tl">
-          <dt>2024–now</dt><dd data-ja="NSTC招聘研究員(PI)&lt;small&gt;国立中興大学(台湾)&lt;/small&gt;">NSTC Visiting Research Scholar (PI)<small>National Chung Hsing University, Taiwan</small></dd>
-          <dt>2022–2024</dt><dd data-ja="博士研究員&lt;small&gt;国立中興大学(台湾)· 受入:橋本哲也 教授&lt;/small&gt;">Postdoctoral Research Fellow<small>National Chung Hsing University, Taiwan · Host: Prof. Tetsuya Hashimoto</small></dd>
-          <dt>2020–2022</dt><dd data-ja="博士研究員&lt;small&gt;エルサレム・ヘブライ大学(イスラエル)· 受入:Tsvi Piran 教授&lt;/small&gt;">Postdoctoral Research Fellow<small>The Hebrew University of Jerusalem, Israel · Host: Prof. Tsvi Piran</small></dd>
-          <dt>2020</dt><dd data-ja="客員研究員&lt;small&gt;東京大学 宇宙線研究所 · 受入:浅野勝晃 教授&lt;/small&gt;">Visiting Research Associate<small>ICRR, The University of Tokyo · Host: Prof. Katsuaki Asano</small></dd>
-          <dt>2017–2020</dt><dd data-ja="日本学術振興会 特別研究員(DC1、PI)&lt;small&gt;東京大学 · 受入:戸谷友則 教授&lt;/small&gt;">JSPS Research Fellow (DC1, PI)<small>The University of Tokyo · Host: Prof. Tomonori Totani</small></dd>
+          <dt>2024–now</dt><dd data-ja="NSTC招聘研究員(PI)&lt;small&gt;国立中興大学(台湾)&lt;/small&gt;" data-zh="國科會訪問研究學者(PI)&lt;small&gt;國立中興大學(臺灣)&lt;/small&gt;">NSTC Visiting Research Scholar (PI)<small>National Chung Hsing University, Taiwan</small></dd>
+          <dt>2022–2024</dt><dd data-ja="博士研究員&lt;small&gt;国立中興大学(台湾)· 受入:橋本哲也 教授&lt;/small&gt;" data-zh="博士後研究員&lt;small&gt;國立中興大學(臺灣)· 接待:橋本哲也 教授&lt;/small&gt;">Postdoctoral Research Fellow<small>National Chung Hsing University, Taiwan · Host: Prof. Tetsuya Hashimoto</small></dd>
+          <dt>2020–2022</dt><dd data-ja="博士研究員&lt;small&gt;エルサレム・ヘブライ大学(イスラエル)· 受入:Tsvi Piran 教授&lt;/small&gt;" data-zh="博士後研究員&lt;small&gt;耶路撒冷希伯來大學(以色列)· 接待:Tsvi Piran 教授&lt;/small&gt;">Postdoctoral Research Fellow<small>The Hebrew University of Jerusalem, Israel · Host: Prof. Tsvi Piran</small></dd>
+          <dt>2020</dt><dd data-ja="客員研究員&lt;small&gt;東京大学 宇宙線研究所 · 受入:浅野勝晃 教授&lt;/small&gt;" data-zh="訪問研究員&lt;small&gt;東京大學 宇宙線研究所 · 接待:淺野勝晃 教授&lt;/small&gt;">Visiting Research Associate<small>ICRR, The University of Tokyo · Host: Prof. Katsuaki Asano</small></dd>
+          <dt>2017–2020</dt><dd data-ja="日本学術振興会 特別研究員(DC1、PI)&lt;small&gt;東京大学 · 受入:戸谷友則 教授&lt;/small&gt;" data-zh="日本學術振興會特別研究員(DC1,PI)&lt;small&gt;東京大學 · 接待:戶谷友則 教授&lt;/small&gt;">JSPS Research Fellow (DC1, PI)<small>The University of Tokyo · Host: Prof. Tomonori Totani</small></dd>
         </dl>
-        <h3 style="margin-top:2rem" data-ja="学歴">Education</h3>
+        <h3 style="margin-top:2rem" data-ja="学歴" data-zh="學歷">Education</h3>
         <dl class="tl">
-          <dt>2020</dt><dd data-ja="博士(理学)、東京大学 天文学専攻&lt;small&gt;指導教員:戸谷友則 教授&lt;/small&gt;">PhD in Astronomy, The University of Tokyo<small>Advisor: Prof. Tomonori Totani</small></dd>
-          <dt>2017</dt><dd data-ja="修士(理学)、東京大学 天文学専攻">MS in Astronomy, The University of Tokyo</dd>
-          <dt>2014</dt><dd data-ja="学士(理学)、東京大学 天文学科">BS in Astronomy, The University of Tokyo</dd>
+          <dt>2020</dt><dd data-ja="博士(理学)、東京大学 天文学専攻&lt;small&gt;指導教員:戸谷友則 教授&lt;/small&gt;" data-zh="天文學博士,東京大學&lt;small&gt;指導教授:戶谷友則 教授&lt;/small&gt;">PhD in Astronomy, The University of Tokyo<small>Advisor: Prof. Tomonori Totani</small></dd>
+          <dt>2017</dt><dd data-ja="修士(理学)、東京大学 天文学専攻" data-zh="天文學碩士,東京大學">MS in Astronomy, The University of Tokyo</dd>
+          <dt>2014</dt><dd data-ja="学士(理学)、東京大学 天文学科" data-zh="天文學學士,東京大學">BS in Astronomy, The University of Tokyo</dd>
         </dl>
       </div>
       <div>
-        <h3 data-ja="研究代表者としての研究費">Grants as PI</h3>
+        <h3 data-ja="研究代表者としての研究費" data-zh="主持之研究計畫">Grants as PI</h3>
         <dl class="tl">
-          <dt>2024–2027</dt><dd data-ja="台湾NSTC研究費&lt;small&gt;460万台湾ドル ·「Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond」&lt;/small&gt;">NSTC Research Grant, Taiwan<small>4.6M NTD · “Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond”</small></dd>
-          <dt>2017–2020</dt><dd data-ja="日本学術振興会 特別研究員奨励費(DC1)&lt;small&gt;1,000万円&lt;/small&gt;">JSPS Grant-in-Aid (DC1), Japan<small>10M JPY</small></dd>
+          <dt>2024–2027</dt><dd data-ja="台湾NSTC研究費&lt;small&gt;460万台湾ドル ·「Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond」&lt;/small&gt;" data-zh="國科會研究計畫(臺灣)&lt;small&gt;新臺幣460萬元 · 「Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond」&lt;/small&gt;">NSTC Research Grant, Taiwan<small>4.6M NTD · “Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond”</small></dd>
+          <dt>2017–2020</dt><dd data-ja="日本学術振興会 特別研究員奨励費(DC1)&lt;small&gt;1,000万円&lt;/small&gt;" data-zh="日本學術振興會 特別研究員獎勵費(DC1)&lt;small&gt;日圓1,000萬元&lt;/small&gt;">JSPS Grant-in-Aid (DC1), Japan<small>10M JPY</small></dd>
         </dl>
-        <h3 style="margin-top:2rem" data-ja="受賞">Awards</h3>
+        <h3 style="margin-top:2rem" data-ja="受賞" data-zh="獲獎">Awards</h3>
         <dl class="tl">
-          <dt>2025</dt><dd data-ja="若手研究者 優秀研究賞(第2位)&lt;small&gt;台湾総合大学システム&lt;/small&gt;">Excellent Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
-          <dt>2024</dt><dd data-ja="若手研究者 傑出研究賞(第1位)&lt;small&gt;台湾総合大学システム&lt;/small&gt;">Outstanding Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
-          <dt>2020</dt><dd data-ja="T. D. Lee Prize ポスドクフェローシップ&lt;small&gt;上海交通大学(辞退)&lt;/small&gt;">T. D. Lee Prize Postdoctoral Fellowship<small>Shanghai Jiao Tong University (declined)</small></dd>
-          <dt>2020</dt><dd data-ja="理学系研究科 研究奨励賞(博士)&lt;small&gt;東京大学&lt;/small&gt;">School of Science Research Award (PhD)<small>The University of Tokyo</small></dd>
-          <dt>2017</dt><dd data-ja="理学系研究科 研究奨励賞(修士)&lt;small&gt;東京大学&lt;/small&gt;">School of Science Research Award (MS)<small>The University of Tokyo</small></dd>
+          <dt>2025</dt><dd data-ja="若手研究者 優秀研究賞(第2位)&lt;small&gt;台湾総合大学システム&lt;/small&gt;" data-zh="年輕學者優秀研究獎(第二名)&lt;small&gt;臺灣綜合大學系統&lt;/small&gt;">Excellent Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
+          <dt>2024</dt><dd data-ja="若手研究者 傑出研究賞(第1位)&lt;small&gt;台湾総合大学システム&lt;/small&gt;" data-zh="年輕學者傑出研究獎(第一名)&lt;small&gt;臺灣綜合大學系統&lt;/small&gt;">Outstanding Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
+          <dt>2020</dt><dd data-ja="T. D. Lee Prize ポスドクフェローシップ&lt;small&gt;上海交通大学(辞退)&lt;/small&gt;" data-zh="T. D. Lee Prize 博士後研究獎學金&lt;small&gt;上海交通大學(婉拒)&lt;/small&gt;">T. D. Lee Prize Postdoctoral Fellowship<small>Shanghai Jiao Tong University (declined)</small></dd>
+          <dt>2020</dt><dd data-ja="理学系研究科 研究奨励賞(博士)&lt;small&gt;東京大学&lt;/small&gt;" data-zh="理學系研究科研究獎(博士)&lt;small&gt;東京大學&lt;/small&gt;">School of Science Research Award (PhD)<small>The University of Tokyo</small></dd>
+          <dt>2017</dt><dd data-ja="理学系研究科 研究奨励賞(修士)&lt;small&gt;東京大学&lt;/small&gt;" data-zh="理學系研究科研究獎(碩士)&lt;small&gt;東京大學&lt;/small&gt;">School of Science Research Award (MS)<small>The University of Tokyo</small></dd>
         </dl>
       </div>
     </div>
@@ -388,17 +392,17 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 
 <section id="talks">
   <div class="wrap">
-    <div class="head"><p class="label" data-ja="講演">Talks</p><h2 data-ja="主な招待講演">Selected invited talks</h2><p data-ja="5か国で20件の招待コロキウム・セミナー、6件の国際会議招待講演。">20 invited colloquia and seminars in 5 countries, and 6 invited conference talks.</p></div>
+    <div class="head"><p class="label" data-ja="講演" data-zh="演講">Talks</p><h2 data-ja="主な招待講演" data-zh="主要受邀演講">Selected invited talks</h2><p data-ja="5か国で20件の招待コロキウム・セミナー、6件の国際会議招待講演。" data-zh="在5個國家進行20場受邀演講與研討會,以及6場國際會議受邀演講。">20 invited colloquia and seminars in 5 countries, and 6 invited conference talks.</p></div>
     <dl class="tl">
-      <dt>Jun 2027</dt><dd data-ja="Istanbul Magnetar Workshop(招待講演、予定)&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;">Istanbul Magnetar Workshop (invited, scheduled)<small>Istanbul, Turkey</small></dd>
-      <dt>Mar 2026</dt><dd data-ja="中央研究院天文及天文物理研究所(ASIAA)コロキウム ·「Fast Radio Bursts at the Dawn of a Golden Era」&lt;small&gt;台湾・台北&lt;/small&gt;">ASIAA Colloquium · “Fast Radio Bursts at the Dawn of a Golden Era”<small>Taipei, Taiwan</small></dd>
-      <dt>Mar 2026</dt><dd data-ja="CRCタウンミーティング(招待講演)·「電波と高エネルギー観測の連携」&lt;small&gt;名古屋&lt;/small&gt;">CRC Town Meeting (invited) · “Synergy Between Radio and High-Energy Observations”<small>Nagoya, Japan</small></dd>
-      <dt>Feb 2026</dt><dd data-ja="サバンジュ大学 物理学科セミナー&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;">Sabancı University, Department of Physics Seminar<small>Istanbul, Turkey</small></dd>
-      <dt>Jan 2026</dt><dd data-ja="京都大学 物理学教室コロキウム&lt;small&gt;京都&lt;/small&gt;">Kyoto University, Department of Physics Colloquium<small>Kyoto, Japan</small></dd>
-      <dt>Jul 2025</dt><dd data-ja="大阪大学 理論宇宙物理学コロキウム&lt;small&gt;大阪&lt;/small&gt;">Osaka University, Theoretical Astrophysics Colloquium<small>Osaka, Japan</small></dd>
-      <dt>Nov 2024</dt><dd data-ja="清華大学・中央大学 天文研究所コロキウム&lt;small&gt;台湾・新竹、桃園&lt;/small&gt;">NTHU and NCU Institute of Astronomy Colloquia<small>Hsinchu and Taoyuan, Taiwan</small></dd>
-      <dt>Jun 2024</dt><dd data-ja="Magnetar Thinkshop(招待講演)&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;">Magnetar Thinkshop (invited)<small>Istanbul, Turkey</small></dd>
-      <dt>Nov 2023</dt><dd data-ja="京都大学 基礎物理学研究所コロキウム&lt;small&gt;京都&lt;/small&gt;">Yukawa Institute for Theoretical Physics Colloquium<small>Kyoto, Japan</small></dd>
+      <dt>Jun 2027</dt><dd data-ja="Istanbul Magnetar Workshop(招待講演、予定)&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;" data-zh="Istanbul Magnetar Workshop(受邀演講,預定)&lt;small&gt;土耳其 伊斯坦堡&lt;/small&gt;">Istanbul Magnetar Workshop (invited, scheduled)<small>Istanbul, Turkey</small></dd>
+      <dt>Mar 2026</dt><dd data-ja="中央研究院天文及天文物理研究所(ASIAA)コロキウム ·「Fast Radio Bursts at the Dawn of a Golden Era」&lt;small&gt;台湾・台北&lt;/small&gt;" data-zh="中央研究院天文及天文物理研究所(ASIAA)演講 · 「Fast Radio Bursts at the Dawn of a Golden Era」&lt;small&gt;臺灣 臺北&lt;/small&gt;">ASIAA Colloquium · “Fast Radio Bursts at the Dawn of a Golden Era”<small>Taipei, Taiwan</small></dd>
+      <dt>Mar 2026</dt><dd data-ja="CRCタウンミーティング(招待講演)·「電波と高エネルギー観測の連携」&lt;small&gt;名古屋&lt;/small&gt;" data-zh="CRC Town Meeting(受邀演講)· 「電波與高能觀測的協同」&lt;small&gt;日本 名古屋&lt;/small&gt;">CRC Town Meeting (invited) · “Synergy Between Radio and High-Energy Observations”<small>Nagoya, Japan</small></dd>
+      <dt>Feb 2026</dt><dd data-ja="サバンジュ大学 物理学科セミナー&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;" data-zh="薩班哲大學 物理系研討會&lt;small&gt;土耳其 伊斯坦堡&lt;/small&gt;">Sabancı University, Department of Physics Seminar<small>Istanbul, Turkey</small></dd>
+      <dt>Jan 2026</dt><dd data-ja="京都大学 物理学教室コロキウム&lt;small&gt;京都&lt;/small&gt;" data-zh="京都大學 物理系演講&lt;small&gt;日本 京都&lt;/small&gt;">Kyoto University, Department of Physics Colloquium<small>Kyoto, Japan</small></dd>
+      <dt>Jul 2025</dt><dd data-ja="大阪大学 理論宇宙物理学コロキウム&lt;small&gt;大阪&lt;/small&gt;" data-zh="大阪大學 理論天文物理演講&lt;small&gt;日本 大阪&lt;/small&gt;">Osaka University, Theoretical Astrophysics Colloquium<small>Osaka, Japan</small></dd>
+      <dt>Nov 2024</dt><dd data-ja="清華大学・中央大学 天文研究所コロキウム&lt;small&gt;台湾・新竹、桃園&lt;/small&gt;" data-zh="清華大學與中央大學 天文研究所演講&lt;small&gt;臺灣 新竹、桃園&lt;/small&gt;">NTHU and NCU Institute of Astronomy Colloquia<small>Hsinchu and Taoyuan, Taiwan</small></dd>
+      <dt>Jun 2024</dt><dd data-ja="Magnetar Thinkshop(招待講演)&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;" data-zh="Magnetar Thinkshop(受邀演講)&lt;small&gt;土耳其 伊斯坦堡&lt;/small&gt;">Magnetar Thinkshop (invited)<small>Istanbul, Turkey</small></dd>
+      <dt>Nov 2023</dt><dd data-ja="京都大学 基礎物理学研究所コロキウム&lt;small&gt;京都&lt;/small&gt;" data-zh="京都大學 基礎物理學研究所演講&lt;small&gt;日本 京都&lt;/small&gt;">Yukawa Institute for Theoretical Physics Colloquium<small>Kyoto, Japan</small></dd>
     </dl>
   </div>
 </section>
@@ -406,10 +410,10 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 <section id="contact" style="border-bottom:0">
   <div class="wrap contact">
     <div>
-      <p class="label" data-ja="連絡先">Contact</p>
-      <h2 style="font-size:var(--step-3); margin-top:0.5rem" data-ja="お問い合わせ">Get in touch</h2>
-      <p class="addr" style="margin-top:0.8rem" data-ja="国立中興大学 物理学科&lt;br&gt;402 台湾 台中市南区興大路145号">Department of Physics, National Chung Hsing University<br>145 Xingda Rd., South Dist., Taichung 402, Taiwan</p>
-      <div class="mail"><code id="email">shotaro.s.yamasaki@gmail.com</code><button type="button" id="copy" data-ja="コピー">Copy</button></div>
+      <p class="label" data-ja="連絡先" data-zh="聯絡">Contact</p>
+      <h2 style="font-size:var(--step-3); margin-top:0.5rem" data-ja="お問い合わせ" data-zh="聯絡方式">Get in touch</h2>
+      <p class="addr" style="margin-top:0.8rem" data-ja="国立中興大学 物理学科&lt;br&gt;402 台湾 台中市南区興大路145号" data-zh="國立中興大學 物理學系&lt;br&gt;402 臺中市南區興大路145號">Department of Physics, National Chung Hsing University<br>145 Xingda Rd., South Dist., Taichung 402, Taiwan</p>
+      <div class="mail"><code id="email">shotaro.s.yamasaki@gmail.com</code><button type="button" id="copy" data-ja="コピー" data-zh="複製">Copy</button></div>
       <div class="links" style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.2rem">
         <a class="pill" href="https://orcid.org/0000-0002-1688-8708" target="_blank" rel="noopener">ORCID 0000-0002-1688-8708 ↗</a>
         <a class="pill" href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX ↗</a>
@@ -420,7 +424,7 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 </section>
 </main>
 
-<footer><div class="wrap"><p data-ja="© 2026 山崎翔太郎 · 最終更新 2026年11月">© 2026 Shotaro Yamasaki · Last updated November 2026</p></div></footer>
+<footer><div class="wrap"><p data-ja="© 2026 山崎翔太郎 · 最終更新 2026年11月" data-zh="© 2026 山崎翔太郎 · 最後更新 2026年11月">© 2026 Shotaro Yamasaki · Last updated November 2026</p></div></footer>
 
 <script>
 /* ============ Publication data — edit here ============
@@ -463,13 +467,15 @@ const esc = s => String(s).replace(/[&<>]/g, ch => ({ "&":"&amp;", "<":"&lt;", "
    date: "YYYY-MM-DD"   kind/kindJa: short label   title: paper title (shown in both languages)
    text/textJa: English / Japanese description   link: optional {href, label} */
 const NEWS = [
-  { date:"2026-11-18", kind:"New paper", kindJa:"新しい論文", title:"A Butterfly Collector's View of Fast Radio Bursts: Repeating Sources Go Quiet within a Few Years",
+  { date:"2026-11-18", kind:"New paper", kindJa:"新しい論文", kindZh:"新論文", title:"A Butterfly Collector's View of Fast Radio Bursts: Repeating Sources Go Quiet within a Few Years",
     text:"How long do repeating FRB sources stay active? I borrowed unseen species estimation, first used to predict how many new butterfly species a further collecting trip would find, and applied it to CHIME repeaters. The result suggests that repeating sources go quiet within a few years. Submitted to ApJL.",
     textJa:"繰り返しFRB天体はどれくらいの期間活動を続けるのか。蝶の採集で、もう一度採集に出たら新種がいくつ見つかるかを予測するために生まれた「unseen species推定」をCHIMEのリピーターに応用しました。その結果、リピーターは数年以内に静かになることが示唆されます。ApJLに投稿中。",
+    textZh:"重複FRB源會持續活動多久?我借用「未見物種估計」——最初用來預測再一次採集蝴蝶時會發現多少新物種的方法——並應用於CHIME的重複源。結果顯示,重複源會在幾年內沉寂。已投稿至ApJL。",
     link:{ href:"https://arxiv.org/abs/2611.24202", label:"arXiv:2611.24202" } },
-  { date:"2026-11-12", kind:"New paper", kindJa:"新しい論文", title:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering",
+  { date:"2026-11-12", kind:"New paper", kindJa:"新しい論文", kindZh:"新論文", title:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering",
     text:"With Tetsuya Hashimoto, Tomoki Wada and Tomotsugu Goto, I model how the number of FRB sources in the second CHIME/FRB catalog grows with time, together with the clustering of bursts from repeaters. This constrains how many FRB sources repeat and how often. Submitted to ApJ.",
     textJa:"橋本哲也さん、和田知己さん、後藤友嗣さんとの共同研究です。CHIME/FRB第2カタログで天体数が時間とともに増える様子と、リピーターのバーストの固まり方を同時にモデル化し、どれだけのFRB天体がどのくらいの頻度で繰り返すのかを制限しました。ApJに投稿中。",
+    textZh:"與橋本哲也、和田知己、後藤友嗣合作。我們同時模擬CHIME/FRB第二版星表中源數量隨時間的增長,以及重複源爆發的群聚性,藉此限制有多少FRB源會重複、以及重複的頻率。已投稿至ApJ。",
     link:{ href:"https://arxiv.org/abs/2611.15099", label:"arXiv:2611.15099" } },
 ];
 const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -477,9 +483,9 @@ let LANG = "en";
 function renderNews() {
   document.getElementById("newslist").innerHTML = NEWS.map(n => {
     const [y, m, d] = n.date.split("-");
-    const when = LANG === "ja" ? `${y}年${+m}月${+d}日` : `${MON[+m - 1]} ${+d}, ${y}`;
-    const kind = LANG === "ja" && n.kindJa ? n.kindJa : n.kind;
-    const text = LANG === "ja" && n.textJa ? n.textJa : n.text;
+    const when = LANG === "en" ? `${MON[+m - 1]} ${+d}, ${y}` : `${y}年${+m}月${+d}日`;
+    const kind = (LANG === "ja" && n.kindJa) || (LANG === "zh" && n.kindZh) || n.kind;
+    const text = (LANG === "ja" && n.textJa) || (LANG === "zh" && n.textZh) || n.text;
     return `<li><time datetime="${n.date}">${when}</time><div style="min-width:0">
       <span class="kind">${esc(kind)}</span><h3>${esc(n.title)}</h3><p>${esc(text)}</p>
       ${n.link ? `<p class="lnk"><a href="${n.link.href}" target="_blank" rel="noopener">${esc(n.link.label)} ↗</a></p>` : ""}</div></li>`;
@@ -515,29 +521,28 @@ render(start);
 
 
 /* ============ Language switch ============
-   Elements with a data-ja attribute hold their Japanese content.
+   Elements with data-ja / data-zh attributes hold their Japanese / Traditional Chinese content.
    English is the default. The choice is remembered in this browser. */
 function setLang(l) {
+  if (!["en", "ja", "zh"].includes(l)) l = "en";
   LANG = l;
-  document.documentElement.lang = l;
+  document.documentElement.lang = l === "zh" ? "zh-Hant-TW" : l;
   document.querySelectorAll("[data-ja]").forEach(el => {
     if (el.dataset.en === undefined) el.dataset.en = el.innerHTML;
-    el.innerHTML = l === "ja" ? el.dataset.ja : el.dataset.en;
+    el.innerHTML = el.dataset[l] ?? el.dataset.en;
   });
-  const b = document.getElementById("lang");
-  b.textContent = l === "ja" ? "English" : "日本語";
-  b.setAttribute("aria-label", l === "ja" ? "Switch to English" : "日本語に切り替える");
+  document.querySelectorAll(".lang").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.l === l)));
   renderNews();
   try { localStorage.setItem("lang", l); } catch (e) {}
 }
-document.getElementById("lang").addEventListener("click", () => setLang(LANG === "ja" ? "en" : "ja"));
+document.querySelectorAll(".lang").forEach(b => b.addEventListener("click", () => setLang(b.dataset.l)));
 let startLang = "en";
 try { const q = new URLSearchParams(location.search).get("lang"); startLang = q || localStorage.getItem("lang") || "en"; } catch (e) {}
-setLang(startLang === "ja" ? "ja" : "en");
+setLang(startLang);
 
 document.getElementById("copy").addEventListener("click", e => {
   const t = document.getElementById("email").textContent;
-  const b = e.currentTarget, back = b.innerHTML; const done = () => { b.textContent = LANG === "ja" ? "コピーしました" : "Copied"; setTimeout(() => b.innerHTML = back, 1600); };
+  const b = e.currentTarget, back = b.innerHTML; const done = () => { b.textContent = { ja: "コピーしました", zh: "已複製" }[LANG] || "Copied"; setTimeout(() => b.innerHTML = back, 1600); };
   try {
     navigator.clipboard.writeText(t).then(done, () => selectEmail());
   } catch (err) { selectEmail(); }
