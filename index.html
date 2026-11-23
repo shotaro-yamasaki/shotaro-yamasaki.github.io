@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shotaro Yamasaki</title>
+<meta name="description" content="Shotaro Yamasaki, theoretical astrophysicist working on fast radio bursts, magnetars and cosmology.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ============================================================
+   DESIGN TOKENS — edit this block to restyle the whole site.
+   Layout: one long page, sticky nav, content column ~1080px,
+   hero with a live "dynamic spectrum" of a dispersed burst.
+   ============================================================ */
+:root {
+  /* colors */
+  --bg:        #070a12;   /* page background (deep space)   */
+  --bg-2:      #0c1220;   /* raised surfaces                 */
+  --line:      #1c2538;   /* hairlines, borders              */
+  --fg:        #e4e9f3;   /* main text                       */
+  --muted:     #8b97b0;   /* secondary text                  */
+  --accent:    #7fd3ee;   /* links, highlights (radio cyan)  */
+  --accent-2:  #c9a2ff;   /* low-frequency end of the sweep  */
+  --star:      #f3c77a;   /* representative-paper marker     */
+  /* type */
+  --font-display: "Syne", "Avenir Next", "Segoe UI", sans-serif;
+  --font-body:    "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  /* scale */
+  --step-0: 1rem;  --step-1: 1.2rem;  --step-2: 1.5rem;  --step-3: 2.1rem;  --step-4: clamp(2.4rem, 6vw, 4.2rem);
+  --radius: 10px;
+  --maxw: 1080px;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 400 var(--step-0)/1.65 var(--font-body); -webkit-font-smoothing: antialiased; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--bg); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.label { font: 500 0.75rem/1.2 var(--font-mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- nav ---------- */
+nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 86%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+nav .wrap { display: flex; align-items: center; gap: 1.5rem; padding-block: 0.8rem; }
+nav .brand { font: 600 1rem var(--font-display); color: var(--fg); white-space: nowrap; }
+nav ul { list-style: none; display: flex; gap: 1.2rem; margin: 0 0 0 auto; padding: 0; overflow-x: auto; scrollbar-width: none; }
+nav ul::-webkit-scrollbar { display: none; }
+nav ul a { color: var(--muted); font: 500 0.85rem var(--font-mono); white-space: nowrap; }
+nav ul a:hover { color: var(--fg); text-decoration: none; }
+@media (max-width: 640px) { nav .brand { display: none; } nav ul { margin-left: 0; } }
+
+/* ---------- hero ---------- */
+.hero { position: relative; overflow: hidden; border-bottom: 1px solid var(--line); }
+#sky { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.statwrap { position: relative; padding-block: 0 3.5rem; }
+.hero .wrap:not(.statwrap) { position: relative; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 2.5rem; align-items: center; padding-block: 4.5rem 3.5rem; }
+.hero h1 { font-size: var(--step-4); line-height: 1.02; font-weight: 700; }
+.hero .role { margin-top: 1rem; color: var(--muted); }
+.hero .role strong { color: var(--fg); font-weight: 500; }
+.hero .pitch { margin-top: 1.4rem; font-size: var(--step-1); max-width: 34ch; }
+.hero .links { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.pill { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.85rem; border: 1px solid var(--line); border-radius: 999px; font: 500 0.82rem var(--font-mono); color: var(--fg); background: color-mix(in srgb, var(--bg-2) 70%, transparent); }
+.pill:hover { border-color: var(--accent); text-decoration: none; }
+.spec { position: relative; border: 1px solid var(--line); border-radius: var(--radius); background: color-mix(in srgb, var(--bg) 70%, transparent); padding: 0.8rem; }
+.spec canvas { display: block; width: 100%; aspect-ratio: 4 / 3; max-width: 100%; }
+.spec .cap { display: flex; justify-content: space-between; gap: 1rem; margin-top: 0.5rem; }
+.spec .cap span { font: 400 0.72rem var(--font-mono); color: var(--muted); }
+@media (max-width: 820px) { .hero .wrap:not(.statwrap) { grid-template-columns: minmax(0, 1fr); padding-block: 3rem 2.5rem; } }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.stats div { background: var(--bg-2); padding: 1rem 1.1rem; }
+.stats b { display: block; font: 600 var(--step-3)/1.1 var(--font-display); font-variant-numeric: tabular-nums; }
+.stats span { font-size: 0.85rem; color: var(--muted); }
+@media (max-width: 640px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ---------- sections ---------- */
+section { padding-block: 4.5rem; border-bottom: 1px solid var(--line); }
+.head { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 2.2rem; }
+.head h2 { font-size: var(--step-3); }
+.head p { color: var(--muted); max-width: 62ch; }
+
+/* research themes */
+.theme { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 2rem; align-items: start; padding-block: 2rem; border-top: 1px solid var(--line); }
+.theme:first-of-type { border-top: 0; padding-top: 0; }
+.theme h3 { font-size: var(--step-2); margin: 0.35rem 0 0.8rem; }
+.theme p + p { margin-top: 0.8rem; }
+.theme .q { color: var(--accent); font-style: italic; }
+.theme figure { margin: 0; }
+.theme img { display: block; width: 100%; height: auto; border-radius: 6px; background: #fff; }
+.theme figcaption { margin-top: 0.5rem; font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+.theme .refs { margin-top: 0.8rem; font: 400 0.8rem var(--font-mono); color: var(--muted); }
+@media (max-width: 820px) { .theme { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; } }
+.themes-img { margin: 0 0 2.5rem; }
+.themes-img img { display: block; width: 100%; height: auto; border-radius: var(--radius); }
+
+/* publications */
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+.filters button { cursor: pointer; padding: 0.45rem 0.9rem; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--muted); font: 500 0.82rem var(--font-mono); }
+.filters button[aria-pressed="true"] { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.pubs { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.pub { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr) auto; gap: 1rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+.pub .n { font: 500 0.85rem var(--font-mono); color: var(--muted); padding-top: 0.15rem; }
+.pub .t { font-weight: 500; }
+.pub .a, .pub .j { font-size: 0.9rem; color: var(--muted); }
+.pub .a b { color: var(--fg); font-weight: 600; }
+.pub .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+.tag { font: 500 0.7rem var(--font-mono); padding: 0.15rem 0.5rem; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
+.tag.rep { color: var(--star); border-color: color-mix(in srgb, var(--star) 45%, transparent); }
+.tag.stu { color: var(--accent-2); border-color: color-mix(in srgb, var(--accent-2) 45%, transparent); }
+.pub .c { text-align: right; font: 500 0.85rem var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pub .c b { display: block; color: var(--fg); font-size: 1rem; }
+@media (max-width: 560px) { .pub { grid-template-columns: 2.4rem minmax(0, 1fr); } .pub .c { grid-column: 2; text-align: left; } .pub .c b { display: inline; margin-right: 0.3rem; } }
+.pubnote { margin-top: 1.2rem; font-size: 0.85rem; color: var(--muted); }
+
+/* mentoring */
+.grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 720px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+.card { border: 1px solid var(--line); border-radius: var(--radius); padding: 1.2rem 1.3rem; background: var(--bg-2); }
+.card h3 { font-size: var(--step-1); margin-bottom: 0.35rem; }
+.card p { font-size: 0.92rem; color: var(--muted); }
+.card .who { font: 500 0.75rem var(--font-mono); color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.mentor-intro { max-width: 62ch; margin-bottom: 1.8rem; }
+
+/* timeline lists */
+.cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 3rem; }
+@media (max-width: 760px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.cols h3 { font-size: var(--step-1); margin-bottom: 0.8rem; }
+dl.tl { margin: 0; display: grid; grid-template-columns: 6.2rem minmax(0, 1fr); gap: 0.55rem 1rem; }
+dl.tl dt { font: 500 0.8rem/1.65 var(--font-mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+dl.tl dd { margin: 0; font-size: 0.93rem; }
+dl.tl dd small { display: block; color: var(--muted); font-size: 0.85rem; }
+
+/* contact */
+.contact { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2rem; align-items: center; }
+@media (max-width: 720px) { .contact { grid-template-columns: minmax(0, 1fr); } }
+.contact .addr { color: var(--muted); }
+.mail { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 1rem; }
+.mail code { font: 500 1rem var(--font-mono); color: var(--fg); user-select: all; word-break: break-all; }
+.mail button { cursor: pointer; font: 500 0.78rem var(--font-mono); padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--line); background: transparent; color: var(--muted); }
+.mail button:hover { color: var(--fg); border-color: var(--accent); }
+.portrait { width: 132px; height: 132px; border-radius: 50%; object-fit: cover; border: 1px solid var(--line); filter: grayscale(0.15); }
+footer { padding-block: 2rem 3rem; }
+footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
+</style>
+</head>
+<body>
+
+
+<nav aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">Shotaro Yamasaki</a>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#mentoring">Mentoring</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#talks">Talks</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="sky" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div>
+      <p class="label">Theoretical astrophysics · Fast radio bursts</p>
+      <h1 style="margin-top:0.8rem">Shotaro<br>Yamasaki</h1>
+      <p class="role"><strong>NSTC Visiting Research Scholar</strong><br>Department of Physics, National Chung Hsing University, Taiwan</p>
+      <p class="pitch">I study fast radio bursts across physical scales, from magnetar engines and burst statistics to host galaxies and the ionized Universe.</p>
+      <div class="links">
+        <a class="pill" href="https://ui.adsabs.harvard.edu/search/q=orcid%3A0000-0002-1688-8708&sort=date%20desc" target="_blank" rel="noopener">NASA ADS ↗</a>
+        <a class="pill" href="https://orcid.org/0000-0002-1688-8708" target="_blank" rel="noopener">ORCID ↗</a>
+        <a class="pill" href="https://arxiv.org/a/yamasaki_s_1" target="_blank" rel="noopener">arXiv ↗</a>
+        <a class="pill" href="#contact">Contact</a>
+      </div>
+    </div>
+    <figure class="spec" style="margin:0">
+      <canvas id="waterfall" width="640" height="480" role="img" aria-label="Animated dynamic spectrum of a dispersed radio burst sweeping from high to low frequency"></canvas>
+      <figcaption class="cap"><span id="dmlabel">DM 349 pc cm⁻³</span><span>400–800 MHz · CHIME band</span></figcaption>
+    </figure>
+  </div>
+  <div class="wrap statwrap">
+    <div class="stats">
+      <div><b>28</b><span>refereed papers, 14 first-author</span></div>
+      <div><b>872</b><span>citations</span></div>
+      <div><b>16</b><span>students mentored, 8 student-led papers</span></div>
+      <div><b>20</b><span>invited colloquia and seminars</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="research">
+  <div class="wrap">
+    <div class="head">
+      <p class="label">Research</p>
+      <h2>Fast radio bursts across physical scales</h2>
+      <p>Fast radio bursts (FRBs) are millisecond radio flashes from distant galaxies. I combine physical models with statistical analysis of large data sets from CHIME, FAST and other telescopes. My work follows four connected themes.</p>
+    </div>
+    <figure class="themes-img"><img src="img/themes.jpg" alt="Four panels labelled Origins, Emission, Populations and Cosmology" loading="lazy" width="1600" height="329"></figure>
+
+    <article class="theme">
+      <div>
+        <p class="label">Populations</p>
+        <h3>Do all FRBs repeat?</h3>
+        <p>Every new source looks like a one-off until a second burst is seen. I used the time evolution of the CHIME survey to show that the one-off detection rate declines with time. <strong>Up to 100% (1σ) and at least 50% (2σ) of FRB sources are consistent with being repeaters.</strong></p>
+        <p>I am now modeling the second CHIME/FRB catalog (about 3,000 sources) with the full selection function, to measure repetition rates and how long sources stay active.</p>
+        <p class="refs">Yamasaki et al. 2024, MNRAS 527, 11158 · TCUS Outstanding Research Award 2024</p>
+      </div>
+      <figure><img src="img/repeaters.jpg" alt="Detection rate of one-off and repeating CHIME sources versus operation time" loading="lazy" width="1400" height="626"><figcaption>Detection rate of apparently one-off (solid) and repeating (dashed) CHIME sources versus operation time. The one-off rate drops as slow repeaters are revealed.</figcaption></figure>
+    </article>
+
+    <article class="theme">
+      <div>
+        <p class="label">Emission</p>
+        <h3>Bursts behave like earthquake aftershocks</h3>
+        <p>I brought the two-point correlation function from cosmology to burst sequences of repeating FRBs. With more than 4,000 bursts observed by FAST, <strong>I found that aftershocks within about 0.3 s tend to have lower peak frequencies than their mainshocks, at up to 9σ.</strong></p>
+        <p>I also compared chaos and randomness in magnetar bursts, FRBs, solar flares and earthquakes, and I model how bursts escape magnetar outflows.</p>
+        <p class="refs">Yamasaki &amp; Totani 2025, ApJL 983, L16 · Yamasaki, Gogus &amp; Hashimoto 2024, MNRAS Letters 528, L133</p>
+      </div>
+      <figure><img src="img/correlation.jpg" alt="Chaos versus randomness plane, and time-frequency correlation of FRB 20201124A" loading="lazy" width="1400" height="552"><figcaption>Left: chaos–randomness plane of transients. Right: time–frequency correlation of FRB 20201124A bursts, data (magenta) versus shuffled peak frequencies (teal).</figcaption></figure>
+    </article>
+
+    <article class="theme">
+      <div>
+        <p class="label">Origins</p>
+        <h3>FRBs form in galaxies of any metallicity</h3>
+        <p>I measured the gas-phase metallicity of 49 FRB host galaxies and compared them with model populations of star-forming galaxies. <strong>FRB hosts show no preference for metal-poor or metal-rich galaxies.</strong> This favors progenitor channels that work at any metallicity.</p>
+        <p>As Co-PI of a Subaru/FOCAS IFU program, I am now mapping the local environments of 15 FRB hosts.</p>
+        <p class="refs">Yamasaki et al. 2026, ApJL 997, L6</p>
+      </div>
+      <figure><img src="img/metallicity.jpg" alt="Stellar mass, star-formation rate and metallicity of FRB hosts compared with model galaxy populations" loading="lazy" width="900" height="742"><figcaption>FRB hosts (blue) compared with star-forming galaxies weighted by star-formation rate (magenta), stellar mass (orange), or unweighted (green).</figcaption></figure>
+    </article>
+
+    <article class="theme">
+      <div>
+        <p class="label">Cosmology and theory</p>
+        <h3>From neutron star mergers to the Milky Way halo</h3>
+        <p>In my PhD I proposed FRBs from binary neutron star mergers and showed that a 1 ms window exists in which the signal escapes the merger ejecta. I also built a model of the dispersion measure of the Milky Way halo. <strong>It is included in the public package PyGEDM and has been cited about 170 times.</strong></p>
+        <p>With localized FRBs, I am testing for a local void in the DM–redshift relation, which bears on the Hubble tension.</p>
+        <p class="refs">Yamasaki, Totani &amp; Kiuchi 2018, PASJ 70, 39 · Yamasaki &amp; Totani 2020, ApJ 888, 105</p>
+      </div>
+      <figure><img src="img/bns-halo.jpg" alt="Neutron star merger model and all-sky map of the Milky Way halo dispersion measure" loading="lazy" width="1400" height="528"><figcaption>Left: angular velocities of merging neutron stars and the ejecta column density. FRBs can escape in the grey window. Right: all-sky map of the Milky Way halo DM.</figcaption></figure>
+    </article>
+
+    <article class="theme">
+      <div>
+        <p class="label">Beyond FRBs</p>
+        <h3>Odd radio circles, magnetar flares and GRBs</h3>
+        <p>I proposed that odd radio circles are virial shocks around massive galaxies. The thin observed shells require fast cosmic-ray diffusion, which points to a low-density circumgalactic medium. I have also modeled the spectra of magnetar giant flares and the TeV afterglow of GRB 190114C.</p>
+        <p class="refs">Yamasaki, Sarkar &amp; Li 2024, MNRAS 528, 3854 · Yamasaki &amp; Piran 2022, MNRAS 512, 2142</p>
+      </div>
+      <figure><img src="img/orc.jpg" alt="Odd radio circle image, virial shock schematic and surface brightness profiles" loading="lazy" width="1400" height="487"><figcaption>An odd radio circle, a schematic of a virial shock, and model surface-brightness profiles for cosmic-ray diffusion and advection.</figcaption></figure>
+    </article>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <div class="head">
+      <p class="label">Publications</p>
+      <h2>Refereed papers</h2>
+      <p>Citation counts are from journal websites as of October 2026. For the full record, see <a href="https://ui.adsabs.harvard.edu/search/q=orcid%3A0000-0002-1688-8708&sort=date%20desc" target="_blank" rel="noopener">NASA ADS</a>.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter publications">
+      <button type="button" id="f-rep" data-f="rep" aria-pressed="true">Representative (5)</button>
+      <button type="button" id="f-first" data-f="first" aria-pressed="false">First-author (14)</button>
+      <button type="button" id="f-co" data-f="co" aria-pressed="false">Co-authored (14)</button>
+      <button type="button" id="f-all" data-f="all" aria-pressed="false">All (29)</button>
+    </div>
+    <ol class="pubs" id="pubs"></ol>
+    <p class="pubnote"><span class="tag rep">Representative</span> selected papers · <span class="tag stu">Student-led</span> paper led by a student I supervised or co-supervised</p>
+  </div>
+</section>
+
+<section id="mentoring">
+  <div class="wrap">
+    <div class="head">
+      <p class="label">Mentoring and teaching</p>
+      <h2>Students who publish</h2>
+    </div>
+    <p class="mentor-intro">I have supervised or co-supervised <strong>16 students</strong> from Taiwan, Japan and Turkey (9 graduate, 7 undergraduate). Many started with little astronomy background. <strong>They led 8 refereed papers with me, and three won student research awards.</strong></p>
+    <div class="grid2">
+      <div class="card"><p class="who">NTHU undergraduate → Swinburne</p><h3>Cosmic baryons with FRBs</h3><p>Tzuyin Hsu led an A&amp;A paper on cosmological baryon fluctuations probed by localized FRBs, and won student research awards.</p></div>
+      <div class="card"><p class="who">NTHU undergraduate → NTU</p><h3>Galactic FRB rate for BURSTT</h3><p>Decmend F.-J. Ling started with no astronomy background and led an MNRAS paper on the Galactic FRB rate expected for BURSTT.</p></div>
+      <div class="card"><p class="who">NCHU PhD student</p><h3>FRB environments</h3><p>Vignesh V. V. Rao led a PASP paper inferring FRB environments from galaxy number density, and won the Best Oral Presentation Award at ASROC 2025.</p></div>
+      <div class="card"><p class="who">Sabancı University PhD students</p><h3>Magnetar burst spectroscopy</h3><p>Özge Keskin and Mustafa Demirer applied my magnetar burst models in two ApJ papers on SGR J1935+2154 and SGR J1550−5418.</p></div>
+    </div>
+    <div class="cols" style="margin-top:2.5rem">
+      <div>
+        <h3>Teaching</h3>
+        <dl class="tl">
+          <dt>2023, 2024</dt><dd>Physics laboratory course, NCHU<small>Designed and taught “Understanding Neutron Star Populations on the P–Ṗ Diagram”</small></dd>
+          <dt>2025</dt><dd>TARA summer school<small>Co-designed a program on FRB host galaxies with VLT/MUSE data</small></dd>
+          <dt>2018, 2019</dt><dd>Teaching assistant, The University of Tokyo<small>Computational Astrophysics</small></dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Courses I can teach</h3>
+        <p style="color:var(--muted); font-size:0.93rem">High-Energy Astrophysics · Radiative Processes · Compact Objects · Radio Astronomy · Time-Domain Astrophysics · Cosmology · Bayesian Inference and Machine Learning for Astronomy · Electromagnetism · Statistical Mechanics · Quantum Mechanics</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="career">
+  <div class="wrap">
+    <div class="head"><p class="label">Career</p><h2>Positions, grants and awards</h2></div>
+    <div class="cols">
+      <div>
+        <h3>Positions</h3>
+        <dl class="tl">
+          <dt>2024–now</dt><dd>NSTC Visiting Research Scholar (PI)<small>National Chung Hsing University, Taiwan</small></dd>
+          <dt>2022–2024</dt><dd>Postdoctoral Research Fellow<small>National Chung Hsing University, Taiwan</small></dd>
+          <dt>2020–2022</dt><dd>Postdoctoral Research Fellow<small>The Hebrew University of Jerusalem, Israel</small></dd>
+          <dt>2020</dt><dd>Visiting Research Associate<small>ICRR, The University of Tokyo</small></dd>
+          <dt>2017–2020</dt><dd>JSPS Research Fellow (DC1, PI)<small>The University of Tokyo</small></dd>
+        </dl>
+        <h3 style="margin-top:2rem">Education</h3>
+        <dl class="tl">
+          <dt>2020</dt><dd>PhD in Astronomy, The University of Tokyo<small>Advisor: Prof. Tomonori Totani</small></dd>
+          <dt>2017</dt><dd>MS in Astronomy, The University of Tokyo</dd>
+          <dt>2014</dt><dd>BS in Astronomy, The University of Tokyo</dd>
+        </dl>
+      </div>
+      <div>
+        <h3>Grants as PI</h3>
+        <dl class="tl">
+          <dt>2024–2027</dt><dd>NSTC Research Grant, Taiwan<small>4.6M NTD · “Fast Radio Burst Phenomenology: From Magnetar Origins to Emission Mechanisms and Beyond”</small></dd>
+          <dt>2017–2020</dt><dd>JSPS Grant-in-Aid (DC1), Japan<small>10M JPY</small></dd>
+        </dl>
+        <h3 style="margin-top:2rem">Awards</h3>
+        <dl class="tl">
+          <dt>2025</dt><dd>Excellent Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
+          <dt>2024</dt><dd>Outstanding Research Award for Young Scholars<small>Taiwan Comprehensive University System</small></dd>
+          <dt>2020</dt><dd>T. D. Lee Prize Postdoctoral Fellowship<small>Shanghai Jiao Tong University (declined)</small></dd>
+          <dt>2020</dt><dd>School of Science Research Award (PhD)<small>The University of Tokyo</small></dd>
+          <dt>2017</dt><dd>School of Science Research Award (MS)<small>The University of Tokyo</small></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="talks">
+  <div class="wrap">
+    <div class="head"><p class="label">Talks</p><h2>Selected invited talks</h2><p>20 invited colloquia and seminars in 5 countries, and 6 invited conference talks.</p></div>
+    <dl class="tl">
+      <dt>Jun 2027</dt><dd>Istanbul Magnetar Workshop (invited, scheduled)<small>Istanbul, Turkey</small></dd>
+      <dt>Mar 2026</dt><dd>ASIAA Colloquium · “Fast Radio Bursts at the Dawn of a Golden Era”<small>Taipei, Taiwan</small></dd>
+      <dt>Mar 2026</dt><dd>CRC Town Meeting (invited) · “Synergy Between Radio and High-Energy Observations”<small>Nagoya, Japan</small></dd>
+      <dt>Feb 2026</dt><dd>Sabancı University, Department of Physics Seminar<small>Istanbul, Turkey</small></dd>
+      <dt>Jan 2026</dt><dd>Kyoto University, Department of Physics Colloquium<small>Kyoto, Japan</small></dd>
+      <dt>Jul 2025</dt><dd>Osaka University, Theoretical Astrophysics Colloquium<small>Osaka, Japan</small></dd>
+      <dt>Nov 2024</dt><dd>NTHU and NCU Institute of Astronomy Colloquia<small>Hsinchu and Taoyuan, Taiwan</small></dd>
+      <dt>Jun 2024</dt><dd>Magnetar Thinkshop (invited)<small>Istanbul, Turkey</small></dd>
+      <dt>Nov 2023</dt><dd>Yukawa Institute for Theoretical Physics Colloquium<small>Kyoto, Japan</small></dd>
+    </dl>
+  </div>
+</section>
+
+<section id="contact" style="border-bottom:0">
+  <div class="wrap contact">
+    <div>
+      <p class="label">Contact</p>
+      <h2 style="font-size:var(--step-3); margin-top:0.5rem">Get in touch</h2>
+      <p class="addr" style="margin-top:0.8rem">Department of Physics, National Chung Hsing University<br>145 Xingda Rd., South Dist., Taichung 402, Taiwan</p>
+      <div class="mail"><code id="email">shotaro.s.yamasaki@gmail.com</code><button type="button" id="copy">Copy</button></div>
+      <div class="links" style="display:flex; flex-wrap:wrap; gap:0.6rem; margin-top:1.2rem">
+        <a class="pill" href="https://orcid.org/0000-0002-1688-8708" target="_blank" rel="noopener">ORCID 0000-0002-1688-8708 ↗</a>
+        <a class="pill" href="https://ui.adsabs.harvard.edu/search/q=orcid%3A0000-0002-1688-8708&sort=date%20desc" target="_blank" rel="noopener">NASA ADS ↗</a>
+      </div>
+    </div>
+    <img class="portrait" src="img/portrait.jpg" alt="Portrait of Shotaro Yamasaki" width="132" height="132">
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><p>© 2026 Shotaro Yamasaki · Last updated November 2026</p></div></footer>
+
+<script>
+/* ============ Publication data — edit here ============
+   cat: "first" | "co" | "review"   rep: representative number   stu: true if student-led */
+const PUBS = [
+  { n:1,  a:"<b>Yamasaki</b>, Hashimoto, Wada & Goto", y:"", t:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering", j:"ApJ, submitted", cat:"first" },
+  { n:2,  a:"<b>Yamasaki</b>, Hashimoto, Kusakabe & Goto", y:2026, t:"No Metallicity Preference in Fast Radio Burst Host Galaxies", j:"ApJL, 997, L6", ax:"2508.07688", c:4, cat:"first", rep:3 },
+  { n:3,  a:"<b>Yamasaki</b> & Totani", y:2025, t:"Time-Frequency Correlation of Repeating Fast Radio Bursts: Correlated Aftershocks Tend to Exhibit Downward Frequency Drifts", j:"ApJL, 983, L16", ax:"2412.04313", c:4, cat:"first", rep:2 },
+  { n:4,  a:"<b>Yamasaki</b>, Gogus & Hashimoto", y:2024, t:"Quantifying chaos and randomness in magnetar bursts", j:"MNRAS Letters, 528, L133", ax:"2312.00782", c:6, cat:"first" },
+  { n:5,  a:"<b>Yamasaki</b>, Sarkar & Li", y:2024, t:"Are Odd Radio Circles virial shocks around massive galaxies? Implications for cosmic-ray diffusion in the circumgalactic medium", j:"MNRAS, 528, 3854", ax:"2309.17451", c:15, cat:"first" },
+  { n:6,  a:"<b>Yamasaki</b>, Goto, Ling & Hashimoto", y:2024, t:"The true fraction of repeating fast radio bursts revealed through CHIME source count evolution", j:"MNRAS, 527, 11158", ax:"2309.14337", c:34, cat:"first", rep:1 },
+  { n:7,  a:"<b>Yamasaki</b> & Piran", y:2022, t:"Analytic Modeling of Synchrotron-Self-Compton Spectra: Application to GRB 190114C", j:"MNRAS, 512, 2142", ax:"2112.06945", c:28, cat:"first" },
+  { n:8,  a:"<b>Yamasaki</b>, Eksi & Gogus", y:2022, t:"Angular Dependence of Coherent Radio Emission from Neutron Stars with Multipolar Magnetic Fields", j:"MNRAS, 512, 3189", ax:"2203.06507", c:3, cat:"first" },
+  { n:9,  a:"<b>Yamasaki</b>, Kashiyama & Murase", y:2022, t:"Multi-Wavelength Constraints on the Outflow Properties of the Extremely Bright Millisecond Radio Bursts from the Galactic Magnetar SGR 1935+2154", j:"MNRAS, 511, 3138", ax:"2008.03634", c:14, cat:"first" },
+  { n:10, a:"<b>Yamasaki</b>, Lyubarsky, Granot & Gogus", y:2020, t:"Spectral Modification of Magnetar Flares by Resonant Cyclotron Scattering", j:"MNRAS, 498, 484", ax:"2004.09541", c:17, cat:"first" },
+  { n:11, a:"<b>Yamasaki</b> & Totani", y:2020, t:"The Galactic Halo Contribution to the Dispersion Measure of Extragalactic Fast Radio Bursts", j:"ApJ, 888, 105", ax:"1909.00849", c:170, cat:"first", rep:4 },
+  { n:12, a:"<b>Yamasaki</b>, Kisaka, Terasawa & Enoto", y:2019, t:"Relativistic Fireball Reprise: Radio Suppression at the Onset of Short Magnetar Bursts", j:"MNRAS, 483, 4175", ax:"1810.06353", c:9, cat:"first" },
+  { n:13, a:"<b>Yamasaki</b>, Totani & Kiuchi", y:2018, t:"Repeating and Non-repeating Fast Radio Bursts from Binary Neutron Star Mergers", j:"PASJ, 70, 39", ax:"1710.02302", c:79, cat:"first", rep:5 },
+  { n:14, a:"<b>Yamasaki</b>, Totani & Kawanaka", y:2016, t:"A Blind Search for Prompt Gamma-Ray Counterparts of Fast Radio Bursts with Fermi-LAT Data", j:"MNRAS, 460, 2875", ax:"1604.03077", c:29, cat:"first" },
+  { n:15, a:"Senjaya, Goto, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"A Possible Solution to the Fermi Paradox? The Lethal Impact of Asteroid Collisions, Supernova Explosions, and Giant Molecular Clouds on Advanced Technological Civilization Migration", j:"ApJ, accepted", cat:"co", stu:true },
+  { n:16, a:"Masaoka, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"Constraints on the Physical Association between ICECAT1 Neutrinos and Fast Radio Bursts Using the Second CHIME/FRB Catalogue", j:"ApJ, submitted", ax:"2603.24983", cat:"co", stu:true },
+  { n:17, a:"Lin, <b>Yamasaki</b>, Hashimoto & Goto", y:"", t:"Stochasticity and Chaos in Active Fast Radio Burst Repeaters and Magnetar Periodic Radio Pulses: Time, Energy, and Frequency Analyses", j:"PASP, submitted", ax:"2512.10249", cat:"co", stu:true },
+  { n:18, a:"Rao, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2026, t:"Statistical Inference of Fast Radio Burst Environments Using Galaxy Number Density", j:"PASP, 138, 084103", ax:"2608.09192", cat:"co", stu:true },
+  { n:19, a:"Sharma, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2025, t:"Retracing the Cold Plasma Dispersion Law in Pulsar B0329+54: New Insights into Frequency-Dependent Dispersion Measures", j:"ApJ, 980, 26", ax:"2501.02082", cat:"co" },
+  { n:20, a:"Hsu, Hashimoto, Yang, <b>Yamasaki</b>, et al.", y:2025, t:"Decoding the cosmological baryonic fluctuations using localized fast radio bursts", j:"A&A, 968, A163", ax:"2505.03326", cat:"co", stu:true },
+  { n:21, a:"Ling, Hashimoto, <b>Yamasaki</b>, et al.", y:2022, t:"Detection Rate of Fast Radio Bursts in the Milky Way with BURSTT", j:"MNRAS, 518, 1398", ax:"2210.11077", cat:"co", stu:true },
+  { n:22, a:"Demirer et al. incl. <b>Yamasaki</b>", y:2025, t:"Detailed Time Resolved Spectral and Temporal Investigations of SGR J1550–5418 Bursts Detected with Fermi/Gamma-ray Burst Monitor", j:"ApJ, 988, 282", ax:"2506.04414", cat:"co", stu:true },
+  { n:23, a:"Keskin et al. incl. <b>Yamasaki</b>", y:2024, t:"Concise Spectrotemporal Studies of Magnetar SGR J1935+2154 Bursts", j:"ApJ, 965, 130", ax:"2402.18151", cat:"co", stu:true },
+  { n:24, a:"Lin et al. incl. <b>Yamasaki</b>", y:2022, t:"BURSTT: Bustling Universe Radio Survey Telescope in Taiwan", j:"PASP, 134, 094106", ax:"2206.08983", cat:"co" },
+  { n:25, a:"Kim et al. incl. <b>Yamasaki</b>", y:2022, t:"On the relation between duration and energy of non-repeating fast radio bursts: census with the CHIME data", j:"MNRAS, 514, 5987", ax:"2206.11330", cat:"co" },
+  { n:26, a:"Hashimoto et al. incl. <b>Yamasaki</b>", y:2022, t:"Energy functions of fast radio bursts derived from the first CHIME/FRB catalogue", j:"MNRAS, 511, 1961", ax:"2201.03574", cat:"co" },
+  { n:27, a:"Niino et al. incl. <b>Yamasaki</b>", y:2018, t:"A Search for Optical Transients Associated with Fast Radio Burst 150418", j:"PASJ, 70, L7", ax:"1806.00562", cat:"co" },
+  { n:28, a:"Keane et al. incl. <b>Yamasaki</b>", y:2016, t:"The Host Galaxy of a Fast Radio Burst", j:"Nature, 530, 453", ax:"1602.07477", cat:"co" },
+  { n:29, a:"<b>Yamasaki</b>", y:2019, t:"Fast Radio Bursts and Binary Neutron Star Mergers (invited review, in Japanese)", j:"The Astronomical Herald, 112, 375", cat:"review" },
+];
+
+const esc = s => String(s).replace(/[&<>]/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[ch]));
+const list = document.getElementById("pubs");
+function render(f) {
+  let items = PUBS.filter(p => f === "all" || (f === "rep" ? p.rep : p.cat === f));
+  if (f === "rep") items = items.slice().sort((x, y) => x.rep - y.rep);
+  list.innerHTML = items.map(p => `
+    <li class="pub">
+      <span class="n">[${p.n}]</span>
+      <div style="min-width:0">
+        <p class="t">${esc(p.t)}</p>
+        <p class="a">${p.a.replace(/&(?!amp;)/g, "&amp;")}${p.y ? " · " + p.y : ""}</p>
+        <p class="j">${esc(p.j)}${p.ax ? ` · <a href="https://arxiv.org/abs/${p.ax}" target="_blank" rel="noopener">arXiv:${p.ax}</a>` : ""}</p>
+        ${(p.rep || p.stu) ? `<div class="tags">${p.rep ? `<span class="tag rep">Representative ${p.rep}</span>` : ""}${p.stu ? `<span class="tag stu">Student-led</span>` : ""}</div>` : ""}
+      </div>
+      <span class="c">${p.c != null ? `<b>${p.c}</b>citations` : ""}</span>
+    </li>`).join("");
+}
+const btns = document.querySelectorAll(".filters button");
+btns.forEach(b => b.addEventListener("click", () => {
+  btns.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  render(b.dataset.f);
+  try { localStorage.setItem("pubFilter", b.dataset.f); } catch (e) {}
+}));
+let start = "rep";
+try { start = localStorage.getItem("pubFilter") || "rep"; } catch (e) {}
+btns.forEach(x => x.setAttribute("aria-pressed", String(x.dataset.f === start)));
+render(start);
+
+document.getElementById("copy").addEventListener("click", e => {
+  const t = document.getElementById("email").textContent;
+  const done = () => { e.target.textContent = "Copied"; setTimeout(() => e.target.textContent = "Copy", 1600); };
+  try {
+    navigator.clipboard.writeText(t).then(done, () => selectEmail());
+  } catch (err) { selectEmail(); }
+  function selectEmail() { const r = document.createRange(); r.selectNodeContents(document.getElementById("email")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+});
+
+/* ============ Hero graphics ============ */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+// starfield
+const sky = document.getElementById("sky"), sctx = sky.getContext("2d");
+let stars = [];
+function sizeSky() {
+  const r = sky.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+  sky.width = r.width * d; sky.height = r.height * d; sctx.setTransform(d, 0, 0, d, 0, 0);
+  stars = Array.from({ length: Math.round(r.width * r.height / 2600) }, () => ({ x: Math.random() * r.width, y: Math.random() * r.height, r: Math.random() * 1.1 + 0.2, a: Math.random() * 0.6 + 0.15, p: Math.random() * 6.28 }));
+}
+function drawSky(t) {
+  const r = sky.getBoundingClientRect();
+  sctx.clearRect(0, 0, r.width, r.height);
+  const g = sctx.createRadialGradient(r.width * 0.8, r.height * 0.2, 0, r.width * 0.8, r.height * 0.2, r.width * 0.7);
+  g.addColorStop(0, "rgba(90,110,200,0.16)"); g.addColorStop(1, "rgba(0,0,0,0)");
+  sctx.fillStyle = g; sctx.fillRect(0, 0, r.width, r.height);
+  for (const s of stars) {
+    const tw = reduce ? 1 : 0.75 + 0.25 * Math.sin(t / 900 + s.p);
+    sctx.fillStyle = `rgba(230,236,255,${s.a * tw})`;
+    sctx.beginPath(); sctx.arc(s.x, s.y, s.r, 0, 6.283); sctx.fill();
+  }
+}
+
+// dynamic spectrum: delay ∝ DM (ν^-2 − ν_top^-2), 4.149 ms GHz^2 per pc cm^-3
+const wf = document.getElementById("waterfall"), w = wf.getContext("2d");
+const W = wf.width, H = wf.height, PAD = { l: 46, r: 12, t: 12, b: 34 };
+const NU0 = 0.4, NU1 = 0.8, SPAN = 1.6; // GHz, seconds shown
+const DMS = [349, 557, 1210, 87, 411];
+let dmi = 0, burstT0 = 0;
+const noise = document.createElement("canvas"); noise.width = 160; noise.height = 64;
+(function () { const n = noise.getContext("2d"), im = n.createImageData(160, 64);
+  for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 38; im.data[i] = v * 0.7; im.data[i + 1] = v * 0.8; im.data[i + 2] = v * 1.2; im.data[i + 3] = 255; }
+  n.putImageData(im, 0, 0); })();
+function drawWF(now) {
+  const pw = W - PAD.l - PAD.r, ph = H - PAD.t - PAD.b;
+  w.fillStyle = css("--bg"); w.fillRect(0, 0, W, H);
+  w.imageSmoothingEnabled = false; w.globalAlpha = 0.9; w.drawImage(noise, PAD.l, PAD.t, pw, ph); w.globalAlpha = 1;
+  const DM = DMS[dmi];
+  const k = 0.004149 * DM; // s GHz^2
+  const span = k * (1 / (NU0 * NU0) - 1 / (NU1 * NU1)) + 0.25;
+  const elapsed = reduce ? span * 0.95 : (now - burstT0) / 1000 * (span / 2.4);
+  const tx = t => PAD.l + (t / span) * pw, fy = nu => PAD.t + (NU1 - nu) / (NU1 - NU0) * ph;
+  const cA = css("--accent"), cB = css("--accent-2");
+  for (let i = 0; i <= 140; i++) {
+    const nu = NU1 - (NU1 - NU0) * i / 140;
+    const t = 0.08 + k * (1 / (nu * nu) - 1 / (NU1 * NU1));
+    if (t > elapsed) break;
+    const age = elapsed - t, fade = Math.max(0, 1 - age / (span * 0.9));
+    w.globalAlpha = 0.25 + 0.75 * fade;
+    w.fillStyle = i / 140 < 0.5 ? cA : cB;
+    const width = 5 + 0.006 * DM * (0.6 / nu) ** 4; // scattering grows at low frequency
+    w.shadowColor = w.fillStyle; w.shadowBlur = 8 * fade; w.fillRect(tx(t) - 2, fy(nu) - ph / 280, Math.max(3, width), ph / 140 + 1); w.shadowBlur = 0;
+  }
+  w.globalAlpha = 1;
+  // axes
+  w.strokeStyle = css("--line"); w.lineWidth = 1; w.strokeRect(PAD.l + 0.5, PAD.t + 0.5, pw, ph);
+  w.fillStyle = css("--muted"); w.font = "18px 'IBM Plex Mono', monospace"; w.textAlign = "right"; w.textBaseline = "middle";
+  [800, 600, 400].forEach(f => w.fillText(f, PAD.l - 6, fy(f / 1000)));
+  w.textAlign = "center"; w.textBaseline = "top";
+  w.fillText("time →", PAD.l + pw / 2, H - PAD.b + 8);
+  w.textAlign = "left"; w.fillText("MHz", PAD.l + 8, PAD.t + 8);
+  if (!reduce && elapsed > span * 1.35) { dmi = (dmi + 1) % DMS.length; burstT0 = now; document.getElementById("dmlabel").textContent = `DM ${DMS[dmi]} pc cm⁻³`; }
+}
+function loop(t) { drawSky(t); drawWF(t); if (!reduce) requestAnimationFrame(loop); }
+sizeSky(); addEventListener("resize", () => { sizeSky(); if (reduce) drawSky(0); });
+requestAnimationFrame(t => { burstT0 = t; loop(t); });
+</script>
+
+</body>
+</html>
