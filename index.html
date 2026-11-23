@@ -191,7 +191,7 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
   </div>
   <div class="wrap statwrap">
     <div class="stats">
-      <div><b>28</b><span>refereed papers, 14 first-author</span></div>
+      <div><b>29</b><span>refereed papers, 15 first-author</span></div>
       <div><b>872</b><span>citations</span></div>
       <div><b>16</b><span>students mentored, 8 student-led papers</span></div>
       <div><b>20</b><span>invited colloquia and seminars</span></div>
@@ -274,9 +274,9 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
     </div>
     <div class="filters" role="group" aria-label="Filter publications">
       <button type="button" id="f-rep" data-f="rep" aria-pressed="true">Representative (5)</button>
-      <button type="button" id="f-first" data-f="first" aria-pressed="false">First-author (14)</button>
+      <button type="button" id="f-first" data-f="first" aria-pressed="false">First-author (15)</button>
       <button type="button" id="f-co" data-f="co" aria-pressed="false">Co-authored (14)</button>
-      <button type="button" id="f-all" data-f="all" aria-pressed="false">All (29)</button>
+      <button type="button" id="f-all" data-f="all" aria-pressed="false">All (30)</button>
     </div>
     <ol class="pubs" id="pubs"></ol>
     <p class="pubnote"><span class="tag rep">Representative</span> selected papers · <span class="tag stu">Student-led</span> paper led by a student I supervised or co-supervised</p>
@@ -392,35 +392,36 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 /* ============ Publication data — edit here ============
    cat: "first" | "co" | "review"   rep: representative number   stu: true if student-led */
 const PUBS = [
-  { n:1,  a:"<b>Yamasaki</b>, Hashimoto, Wada & Goto", y:"", t:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering", j:"ApJ, submitted", ax:"2611.15099", cat:"first" },
-  { n:2,  a:"<b>Yamasaki</b>, Hashimoto, Kusakabe & Goto", y:2026, t:"No Metallicity Preference in Fast Radio Burst Host Galaxies", j:"ApJL, 997, L6", ax:"2508.07688", c:4, cat:"first", rep:3 },
-  { n:3,  a:"<b>Yamasaki</b> & Totani", y:2025, t:"Time-Frequency Correlation of Repeating Fast Radio Bursts: Correlated Aftershocks Tend to Exhibit Downward Frequency Drifts", j:"ApJL, 983, L16", ax:"2412.04313", c:4, cat:"first", rep:2 },
-  { n:4,  a:"<b>Yamasaki</b>, Gogus & Hashimoto", y:2024, t:"Quantifying chaos and randomness in magnetar bursts", j:"MNRAS Letters, 528, L133", ax:"2312.00782", c:6, cat:"first" },
-  { n:5,  a:"<b>Yamasaki</b>, Sarkar & Li", y:2024, t:"Are Odd Radio Circles virial shocks around massive galaxies? Implications for cosmic-ray diffusion in the circumgalactic medium", j:"MNRAS, 528, 3854", ax:"2309.17451", c:15, cat:"first" },
-  { n:6,  a:"<b>Yamasaki</b>, Goto, Ling & Hashimoto", y:2024, t:"The true fraction of repeating fast radio bursts revealed through CHIME source count evolution", j:"MNRAS, 527, 11158", ax:"2309.14337", c:34, cat:"first", rep:1 },
-  { n:7,  a:"<b>Yamasaki</b> & Piran", y:2022, t:"Analytic Modeling of Synchrotron-Self-Compton Spectra: Application to GRB 190114C", j:"MNRAS, 512, 2142", ax:"2112.06945", c:28, cat:"first" },
-  { n:8,  a:"<b>Yamasaki</b>, Eksi & Gogus", y:2022, t:"Angular Dependence of Coherent Radio Emission from Neutron Stars with Multipolar Magnetic Fields", j:"MNRAS, 512, 3189", ax:"2203.06507", c:3, cat:"first" },
-  { n:9,  a:"<b>Yamasaki</b>, Kashiyama & Murase", y:2022, t:"Multi-Wavelength Constraints on the Outflow Properties of the Extremely Bright Millisecond Radio Bursts from the Galactic Magnetar SGR 1935+2154", j:"MNRAS, 511, 3138", ax:"2008.03634", c:14, cat:"first" },
-  { n:10, a:"<b>Yamasaki</b>, Lyubarsky, Granot & Gogus", y:2020, t:"Spectral Modification of Magnetar Flares by Resonant Cyclotron Scattering", j:"MNRAS, 498, 484", ax:"2004.09541", c:17, cat:"first" },
-  { n:11, a:"<b>Yamasaki</b> & Totani", y:2020, t:"The Galactic Halo Contribution to the Dispersion Measure of Extragalactic Fast Radio Bursts", j:"ApJ, 888, 105", ax:"1909.00849", c:170, cat:"first", rep:4 },
-  { n:12, a:"<b>Yamasaki</b>, Kisaka, Terasawa & Enoto", y:2019, t:"Relativistic Fireball Reprise: Radio Suppression at the Onset of Short Magnetar Bursts", j:"MNRAS, 483, 4175", ax:"1810.06353", c:9, cat:"first" },
-  { n:13, a:"<b>Yamasaki</b>, Totani & Kiuchi", y:2018, t:"Repeating and Non-repeating Fast Radio Bursts from Binary Neutron Star Mergers", j:"PASJ, 70, 39", ax:"1710.02302", c:79, cat:"first", rep:5 },
-  { n:14, a:"<b>Yamasaki</b>, Totani & Kawanaka", y:2016, t:"A Blind Search for Prompt Gamma-Ray Counterparts of Fast Radio Bursts with Fermi-LAT Data", j:"MNRAS, 460, 2875", ax:"1604.03077", c:29, cat:"first" },
-  { n:15, a:"Senjaya, Goto, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"A Possible Solution to the Fermi Paradox? The Lethal Impact of Asteroid Collisions, Supernova Explosions, and Giant Molecular Clouds on Advanced Technological Civilization Migration", j:"ApJ, accepted", cat:"co", stu:true },
-  { n:16, a:"Masaoka, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"Constraints on the Physical Association between ICECAT1 Neutrinos and Fast Radio Bursts Using the Second CHIME/FRB Catalogue", j:"ApJ, submitted", ax:"2603.24983", cat:"co", stu:true },
-  { n:17, a:"Lin, <b>Yamasaki</b>, Hashimoto & Goto", y:"", t:"Stochasticity and Chaos in Active Fast Radio Burst Repeaters and Magnetar Periodic Radio Pulses: Time, Energy, and Frequency Analyses", j:"PASP, submitted", ax:"2512.10249", cat:"co", stu:true },
-  { n:18, a:"Rao, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2026, t:"Statistical Inference of Fast Radio Burst Environments Using Galaxy Number Density", j:"PASP, 138, 084103", ax:"2608.09192", cat:"co", stu:true },
-  { n:19, a:"Sharma, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2025, t:"Retracing the Cold Plasma Dispersion Law in Pulsar B0329+54: New Insights into Frequency-Dependent Dispersion Measures", j:"ApJ, 980, 26", ax:"2501.02082", cat:"co" },
-  { n:20, a:"Hsu, Hashimoto, Yang, <b>Yamasaki</b>, et al.", y:2025, t:"Decoding the cosmological baryonic fluctuations using localized fast radio bursts", j:"A&A, 968, A163", ax:"2505.03326", cat:"co", stu:true },
-  { n:21, a:"Ling, Hashimoto, <b>Yamasaki</b>, et al.", y:2022, t:"Detection Rate of Fast Radio Bursts in the Milky Way with BURSTT", j:"MNRAS, 518, 1398", ax:"2210.11077", cat:"co", stu:true },
-  { n:22, a:"Demirer et al. incl. <b>Yamasaki</b>", y:2025, t:"Detailed Time Resolved Spectral and Temporal Investigations of SGR J1550–5418 Bursts Detected with Fermi/Gamma-ray Burst Monitor", j:"ApJ, 988, 282", ax:"2506.04414", cat:"co", stu:true },
-  { n:23, a:"Keskin et al. incl. <b>Yamasaki</b>", y:2024, t:"Concise Spectrotemporal Studies of Magnetar SGR J1935+2154 Bursts", j:"ApJ, 965, 130", ax:"2402.18151", cat:"co", stu:true },
-  { n:24, a:"Lin et al. incl. <b>Yamasaki</b>", y:2022, t:"BURSTT: Bustling Universe Radio Survey Telescope in Taiwan", j:"PASP, 134, 094106", ax:"2206.08983", cat:"co" },
-  { n:25, a:"Kim et al. incl. <b>Yamasaki</b>", y:2022, t:"On the relation between duration and energy of non-repeating fast radio bursts: census with the CHIME data", j:"MNRAS, 514, 5987", ax:"2206.11330", cat:"co" },
-  { n:26, a:"Hashimoto et al. incl. <b>Yamasaki</b>", y:2022, t:"Energy functions of fast radio bursts derived from the first CHIME/FRB catalogue", j:"MNRAS, 511, 1961", ax:"2201.03574", cat:"co" },
-  { n:27, a:"Niino et al. incl. <b>Yamasaki</b>", y:2018, t:"A Search for Optical Transients Associated with Fast Radio Burst 150418", j:"PASJ, 70, L7", ax:"1806.00562", cat:"co" },
-  { n:28, a:"Keane et al. incl. <b>Yamasaki</b>", y:2016, t:"The Host Galaxy of a Fast Radio Burst", j:"Nature, 530, 453", ax:"1602.07477", cat:"co" },
-  { n:29, a:"<b>Yamasaki</b>", y:2019, t:"Fast Radio Bursts and Binary Neutron Star Mergers (invited review, in Japanese)", j:"The Astronomical Herald, 112, 375", cat:"review" },
+  { n:1,  a:"<b>Yamasaki</b>", y:"", t:"A Butterfly Collector's View of Fast Radio Bursts: Repeating Sources Go Quiet within a Few Years", j:"ApJL, submitted", ax:"2611.24202", cat:"first" },
+  { n:2,  a:"<b>Yamasaki</b>, Hashimoto, Wada & Goto", y:"", t:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering", j:"ApJ, submitted", ax:"2611.15099", cat:"first" },
+  { n:3,  a:"<b>Yamasaki</b>, Hashimoto, Kusakabe & Goto", y:2026, t:"No Metallicity Preference in Fast Radio Burst Host Galaxies", j:"ApJL, 997, L6", ax:"2508.07688", c:4, cat:"first", rep:3 },
+  { n:4,  a:"<b>Yamasaki</b> & Totani", y:2025, t:"Time-Frequency Correlation of Repeating Fast Radio Bursts: Correlated Aftershocks Tend to Exhibit Downward Frequency Drifts", j:"ApJL, 983, L16", ax:"2412.04313", c:4, cat:"first", rep:2 },
+  { n:5,  a:"<b>Yamasaki</b>, Gogus & Hashimoto", y:2024, t:"Quantifying chaos and randomness in magnetar bursts", j:"MNRAS Letters, 528, L133", ax:"2312.00782", c:6, cat:"first" },
+  { n:6,  a:"<b>Yamasaki</b>, Sarkar & Li", y:2024, t:"Are Odd Radio Circles virial shocks around massive galaxies? Implications for cosmic-ray diffusion in the circumgalactic medium", j:"MNRAS, 528, 3854", ax:"2309.17451", c:15, cat:"first" },
+  { n:7,  a:"<b>Yamasaki</b>, Goto, Ling & Hashimoto", y:2024, t:"The true fraction of repeating fast radio bursts revealed through CHIME source count evolution", j:"MNRAS, 527, 11158", ax:"2309.14337", c:34, cat:"first", rep:1 },
+  { n:8,  a:"<b>Yamasaki</b> & Piran", y:2022, t:"Analytic Modeling of Synchrotron-Self-Compton Spectra: Application to GRB 190114C", j:"MNRAS, 512, 2142", ax:"2112.06945", c:28, cat:"first" },
+  { n:9,  a:"<b>Yamasaki</b>, Eksi & Gogus", y:2022, t:"Angular Dependence of Coherent Radio Emission from Neutron Stars with Multipolar Magnetic Fields", j:"MNRAS, 512, 3189", ax:"2203.06507", c:3, cat:"first" },
+  { n:10,  a:"<b>Yamasaki</b>, Kashiyama & Murase", y:2022, t:"Multi-Wavelength Constraints on the Outflow Properties of the Extremely Bright Millisecond Radio Bursts from the Galactic Magnetar SGR 1935+2154", j:"MNRAS, 511, 3138", ax:"2008.03634", c:14, cat:"first" },
+  { n:11, a:"<b>Yamasaki</b>, Lyubarsky, Granot & Gogus", y:2020, t:"Spectral Modification of Magnetar Flares by Resonant Cyclotron Scattering", j:"MNRAS, 498, 484", ax:"2004.09541", c:17, cat:"first" },
+  { n:12, a:"<b>Yamasaki</b> & Totani", y:2020, t:"The Galactic Halo Contribution to the Dispersion Measure of Extragalactic Fast Radio Bursts", j:"ApJ, 888, 105", ax:"1909.00849", c:170, cat:"first", rep:4 },
+  { n:13, a:"<b>Yamasaki</b>, Kisaka, Terasawa & Enoto", y:2019, t:"Relativistic Fireball Reprise: Radio Suppression at the Onset of Short Magnetar Bursts", j:"MNRAS, 483, 4175", ax:"1810.06353", c:9, cat:"first" },
+  { n:14, a:"<b>Yamasaki</b>, Totani & Kiuchi", y:2018, t:"Repeating and Non-repeating Fast Radio Bursts from Binary Neutron Star Mergers", j:"PASJ, 70, 39", ax:"1710.02302", c:79, cat:"first", rep:5 },
+  { n:15, a:"<b>Yamasaki</b>, Totani & Kawanaka", y:2016, t:"A Blind Search for Prompt Gamma-Ray Counterparts of Fast Radio Bursts with Fermi-LAT Data", j:"MNRAS, 460, 2875", ax:"1604.03077", c:29, cat:"first" },
+  { n:16, a:"Senjaya, Goto, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"A Possible Solution to the Fermi Paradox? The Lethal Impact of Asteroid Collisions, Supernova Explosions, and Giant Molecular Clouds on Advanced Technological Civilization Migration", j:"ApJ, accepted", cat:"co", stu:true },
+  { n:17, a:"Masaoka, Hashimoto, <b>Yamasaki</b>, et al.", y:"", t:"Constraints on the Physical Association between ICECAT1 Neutrinos and Fast Radio Bursts Using the Second CHIME/FRB Catalogue", j:"ApJ, submitted", ax:"2603.24983", cat:"co", stu:true },
+  { n:18, a:"Lin, <b>Yamasaki</b>, Hashimoto & Goto", y:"", t:"Stochasticity and Chaos in Active Fast Radio Burst Repeaters and Magnetar Periodic Radio Pulses: Time, Energy, and Frequency Analyses", j:"PASP, submitted", ax:"2512.10249", cat:"co", stu:true },
+  { n:19, a:"Rao, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2026, t:"Statistical Inference of Fast Radio Burst Environments Using Galaxy Number Density", j:"PASP, 138, 084103", ax:"2608.09192", cat:"co", stu:true },
+  { n:20, a:"Sharma, Hashimoto, Goto, <b>Yamasaki</b>, et al.", y:2025, t:"Retracing the Cold Plasma Dispersion Law in Pulsar B0329+54: New Insights into Frequency-Dependent Dispersion Measures", j:"ApJ, 980, 26", ax:"2501.02082", cat:"co" },
+  { n:21, a:"Hsu, Hashimoto, Yang, <b>Yamasaki</b>, et al.", y:2025, t:"Decoding the cosmological baryonic fluctuations using localized fast radio bursts", j:"A&A, 968, A163", ax:"2505.03326", cat:"co", stu:true },
+  { n:22, a:"Ling, Hashimoto, <b>Yamasaki</b>, et al.", y:2022, t:"Detection Rate of Fast Radio Bursts in the Milky Way with BURSTT", j:"MNRAS, 518, 1398", ax:"2210.11077", cat:"co", stu:true },
+  { n:23, a:"Demirer et al. incl. <b>Yamasaki</b>", y:2025, t:"Detailed Time Resolved Spectral and Temporal Investigations of SGR J1550–5418 Bursts Detected with Fermi/Gamma-ray Burst Monitor", j:"ApJ, 988, 282", ax:"2506.04414", cat:"co", stu:true },
+  { n:24, a:"Keskin et al. incl. <b>Yamasaki</b>", y:2024, t:"Concise Spectrotemporal Studies of Magnetar SGR J1935+2154 Bursts", j:"ApJ, 965, 130", ax:"2402.18151", cat:"co", stu:true },
+  { n:25, a:"Lin et al. incl. <b>Yamasaki</b>", y:2022, t:"BURSTT: Bustling Universe Radio Survey Telescope in Taiwan", j:"PASP, 134, 094106", ax:"2206.08983", cat:"co" },
+  { n:26, a:"Kim et al. incl. <b>Yamasaki</b>", y:2022, t:"On the relation between duration and energy of non-repeating fast radio bursts: census with the CHIME data", j:"MNRAS, 514, 5987", ax:"2206.11330", cat:"co" },
+  { n:27, a:"Hashimoto et al. incl. <b>Yamasaki</b>", y:2022, t:"Energy functions of fast radio bursts derived from the first CHIME/FRB catalogue", j:"MNRAS, 511, 1961", ax:"2201.03574", cat:"co" },
+  { n:28, a:"Niino et al. incl. <b>Yamasaki</b>", y:2018, t:"A Search for Optical Transients Associated with Fast Radio Burst 150418", j:"PASJ, 70, L7", ax:"1806.00562", cat:"co" },
+  { n:29, a:"Keane et al. incl. <b>Yamasaki</b>", y:2016, t:"The Host Galaxy of a Fast Radio Burst", j:"Nature, 530, 453", ax:"1602.07477", cat:"co" },
+  { n:30, a:"<b>Yamasaki</b>", y:2019, t:"Fast Radio Bursts and Binary Neutron Star Mergers (invited review, in Japanese)", j:"The Astronomical Herald, 112, 375", cat:"review" },
 ];
 
 const esc = s => String(s).replace(/[&<>]/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[ch]));
