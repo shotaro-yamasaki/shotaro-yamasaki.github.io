@@ -125,6 +125,17 @@ section { padding-block: 4.5rem; border-bottom: 1px solid var(--line); }
 @media (max-width: 560px) { .pub { grid-template-columns: 2.4rem minmax(0, 1fr); } .pub .c { grid-column: 2; text-align: left; } .pub .c b { display: inline; margin-right: 0.3rem; } }
 .pubnote { margin-top: 1.2rem; font-size: 0.85rem; color: var(--muted); }
 
+
+/* news */
+.news { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.news li { display: grid; grid-template-columns: 7.5rem minmax(0, 1fr); gap: 1.2rem; padding-block: 1.1rem; border-top: 1px solid var(--line); }
+.news li:first-child { border-top: 0; padding-top: 0; }
+.news time { font: 500 0.82rem/1.7 var(--font-mono); color: var(--accent); font-variant-numeric: tabular-nums; }
+.news .kind { display: inline-block; font: 500 0.7rem var(--font-mono); letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem; }
+.news h3 { font: 600 var(--step-1)/1.35 var(--font-body); margin: 0 0 0.3rem; }
+.news p { color: var(--muted); font-size: 0.93rem; max-width: 70ch; }
+.news .lnk { margin-top: 0.4rem; font: 500 0.82rem var(--font-mono); }
+@media (max-width: 560px) { .news li { grid-template-columns: minmax(0, 1fr); gap: 0.3rem; } }
 /* mentoring */
 .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 @media (max-width: 720px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
@@ -163,6 +174,7 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
   <div class="wrap">
     <a class="brand" href="#top">Shotaro Yamasaki</a>
     <ul>
+      <li><a href="#news">News</a></li>
       <li><a href="#research">Research</a></li>
       <li><a href="#publications">Publications</a></li>
       <li><a href="#mentoring">Mentoring</a></li>
@@ -201,6 +213,13 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
 </header>
 
 <main>
+<section id="news">
+  <div class="wrap">
+    <div class="head"><p class="label">News</p><h2>Recent news</h2></div>
+    <ul class="news" id="newslist"></ul>
+  </div>
+</section>
+
 <section id="research">
   <div class="wrap">
     <div class="head">
@@ -433,6 +452,24 @@ const PUBS = [
 ];
 
 const esc = s => String(s).replace(/[&<>]/g, ch => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;" }[ch]));
+/* ============ News — add new items at the top ============
+   date: "YYYY-MM-DD"   kind: short label   title, text: plain text   link: optional {href, label} */
+const NEWS = [
+  { date:"2026-11-18", kind:"New paper", title:"A Butterfly Collector's View of Fast Radio Bursts: Repeating Sources Go Quiet within a Few Years",
+    text:"How long do repeating FRB sources stay active? I borrowed unseen species estimation, first used to predict how many new butterfly species a further collecting trip would find, and applied it to CHIME repeaters. The result suggests that repeating sources go quiet within a few years. Submitted to ApJL.",
+    link:{ href:"https://arxiv.org/abs/2611.24202", label:"arXiv:2611.24202" } },
+  { date:"2026-11-12", kind:"New paper", title:"Fast Radio Burst Population Constrained by Source-Count Growth and Burst Clustering",
+    text:"With Tetsuya Hashimoto, Tomoki Wada and Tomotsugu Goto, I model how the number of FRB sources in the second CHIME/FRB catalog grows with time, together with the clustering of bursts from repeaters. This constrains how many FRB sources repeat and how often. Submitted to ApJ.",
+    link:{ href:"https://arxiv.org/abs/2611.15099", label:"arXiv:2611.15099" } },
+];
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+document.getElementById("newslist").innerHTML = NEWS.map(n => {
+  const [y, m, d] = n.date.split("-");
+  return `<li><time datetime="${n.date}">${MON[+m - 1]} ${+d}, ${y}</time><div style="min-width:0">
+    <span class="kind">${esc(n.kind)}</span><h3>${esc(n.title)}</h3><p>${esc(n.text)}</p>
+    ${n.link ? `<p class="lnk"><a href="${n.link.href}" target="_blank" rel="noopener">${esc(n.link.label)} ↗</a></p>` : ""}</div></li>`;
+}).join("");
+
 const list = document.getElementById("pubs");
 function render(f) {
   let items = PUBS.filter(p => f === "all" || (f === "rep" ? p.rep : p.cat === f));
