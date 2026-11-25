@@ -155,6 +155,10 @@ html[lang="ja"] .label { letter-spacing: 0.08em; }
 .card .who { font: 500 0.75rem var(--font-mono); color: var(--accent); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
 .mentor-intro { max-width: 62ch; margin-bottom: 1.8rem; }
 
+
+.linkcard { display: block; color: inherit; transition: border-color .15s; }
+.linkcard:hover { border-color: var(--accent); text-decoration: none; }
+.linkcard h3 { color: var(--fg); }
 /* timeline lists */
 .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem 3rem; }
 @media (max-width: 760px) { .cols { grid-template-columns: minmax(0, 1fr); } }
@@ -416,6 +420,19 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
       <dt>Jun 2024</dt><dd data-ja="Magnetar Thinkshop(招待講演)&lt;small&gt;トルコ・イスタンブール&lt;/small&gt;" data-zh="Magnetar Thinkshop(受邀演講)&lt;small&gt;土耳其 伊斯坦堡&lt;/small&gt;">Magnetar Thinkshop (invited)<small>Istanbul, Turkey</small></dd>
       <dt>Nov 2023</dt><dd data-ja="京都大学 基礎物理学研究所コロキウム&lt;small&gt;京都&lt;/small&gt;" data-zh="京都大學 基礎物理學研究所演講&lt;small&gt;日本 京都&lt;/small&gt;">Yukawa Institute for Theoretical Physics Colloquium<small>Kyoto, Japan</small></dd>
     </dl>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap">
+    <div class="head"><p class="label" data-ja="便利なリンク" data-zh="實用連結">Useful links</p><h2 data-ja="自作のツール" data-zh="我製作的工具">Tools I made</h2></div>
+    <div class="grid2">
+      <a class="card linkcard" href="https://shotaro-yamasaki.github.io/frb-arxiv-daily/" target="_blank" rel="noopener">
+        <p class="who">shotaro-yamasaki.github.io/frb-arxiv-daily</p>
+        <h3>FRB arXiv Daily ↗</h3>
+        <p data-ja="平日の毎朝、高速電波バーストに関するarXivの新着論文を集め、放射、母銀河、宇宙論などの分野ごとに整理するサイトです。英語と日本語に対応しています。" data-zh="每個工作日早上自動收集快速電波爆發的arXiv新論文,並依輻射、宿主星系、宇宙學等主題分類。提供英文與日文介面。">Every weekday morning, this site collects new arXiv papers on fast radio bursts and sorts them by topic, such as emission, host galaxies, and cosmology. Available in English and Japanese.</p>
+      </a>
+    </div>
   </div>
 </section>
 
