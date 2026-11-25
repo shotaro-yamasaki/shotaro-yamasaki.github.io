@@ -1,0 +1,55 @@
+name: Update publications from ADS
+
+on:
+  schedule:
+    # Every day at 09:37 Taipei time, with a backup run in the evening.
+    - cron: "37 1 * * *"
+    - cron: "7 11 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: update-pubs
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch publication data from ADS
+        env:
+          ADS_TOKEN: ${{ secrets.ADS_TOKEN }}
+        run: python scripts/update_pubs.py
+      - name: Commit data/ads.json
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          [ -f data/ads.json ] || { echo "No data file"; exit 0; }
+          git add data/ads.json
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "Update publication data from ADS $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do
+            if git push origin HEAD:${{ github.event.repository.default_branch }}; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+            sleep $((i * 5))
+            git pull --rebase -X theirs origin ${{ github.event.repository.default_branch }}
+          done
+          exit 1
+      - name: Ask GitHub Pages to rebuild the site
+        if: steps.commit.outputs.pushed == 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"

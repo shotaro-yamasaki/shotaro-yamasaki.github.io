@@ -222,8 +222,8 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
   </div>
   <div class="wrap statwrap">
     <div class="stats">
-      <div><b>29</b><span data-ja="査読論文(うち筆頭15本)" data-zh="篇審查論文(其中第一作者15篇)">refereed papers, 15 first-author</span></div>
-      <div><b>872</b><span data-ja="被引用数" data-zh="次引用">citations</span></div>
+      <div><b id="st-papers">29</b><span id="st-papers-l" data-ja="査読論文(うち筆頭15本)" data-zh="篇審查論文(其中第一作者15篇)">refereed papers, 15 first-author</span></div>
+      <div><b id="st-cites">872</b><span id="st-cites-l" data-ja="被引用数" data-zh="次引用">citations</span></div>
       <div><b>16</b><span data-ja="指導した学生(学生主導の論文8本)" data-zh="位指導學生(學生主導論文8篇)">students mentored, 8 student-led papers</span></div>
       <div><b>20</b><span data-ja="招待コロキウム・セミナー" data-zh="場受邀演講與研討會">invited colloquia and seminars</span></div>
     </div>
@@ -318,7 +318,7 @@ footer p { font: 400 0.78rem var(--font-mono); color: var(--muted); }
     <div class="head">
       <p class="label" data-ja="論文" data-zh="論文">Publications</p>
       <h2 data-ja="査読論文" data-zh="審查論文">Refereed papers</h2>
-      <p data-ja="被引用数は2026年10月時点の各論文誌のサイトによります。全体は&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;をご覧ください。" data-zh="引用次數取自各期刊網站(2026年10月)。完整列表請見&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;。">Citation counts are from journal websites as of October 2026. For the full record, see <a href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX</a>.</p>
+      <p id="pubsource" data-ja="被引用数は2026年10月時点の各論文誌のサイトによります。全体は&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;をご覧ください。" data-zh="引用次數取自各期刊網站(2026年10月)。完整列表請見&lt;a href=&quot;https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;SciX&lt;/a&gt;。">Citation counts are from journal websites as of October 2026. For the full record, see <a href="https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&sort=date+desc" target="_blank" rel="noopener">SciX</a>.</p>
     </div>
     <div class="filters" role="group" aria-label="Filter publications">
       <button type="button" id="f-rep" data-f="rep" aria-pressed="true" data-ja="代表論文(5)" data-zh="代表論文(5)">Representative (5)</button>
@@ -528,8 +528,11 @@ function renderNews() {
 }
 
 const list = document.getElementById("pubs");
+let ALL = PUBS.slice();
+let FILTER = "rep";
 function render(f) {
-  let items = PUBS.filter(p => f === "all" || (f === "rep" ? p.rep : p.cat === f));
+  FILTER = f;
+  let items = ALL.filter(p => f === "all" || (f === "rep" ? p.rep : p.cat === f));
   if (f === "rep") items = items.slice().sort((x, y) => x.rep - y.rep);
   list.innerHTML = items.map(p => `
     <li class="pub">
@@ -540,7 +543,7 @@ function render(f) {
         <p class="j">${esc(p.j)}${p.ax ? ` · <a href="https://arxiv.org/abs/${p.ax}" target="_blank" rel="noopener">arXiv:${p.ax}</a>` : ""}</p>
         ${(p.rep || p.stu) ? `<div class="tags">${p.rep ? `<span class="tag rep">Representative ${p.rep}</span>` : ""}${p.stu ? `<span class="tag stu">Student-led</span>` : ""}</div>` : ""}
       </div>
-      <span class="c">${p.c != null ? `<b>${p.c}</b>citations` : ""}</span>
+      <span class="c">${p.c ? `<b>${p.c}</b>citations` : ""}</span>
     </li>`).join("");
 }
 const btns = document.querySelectorAll(".filters button");
@@ -574,6 +577,61 @@ document.querySelectorAll(".lang").forEach(b => b.addEventListener("click", () =
 let startLang = "en";
 try { const q = new URLSearchParams(location.search).get("lang"); startLang = q || localStorage.getItem("lang") || "en"; } catch (e) {}
 setLang(startLang);
+
+/* ============ Daily update from NASA ADS ============
+   data/ads.json is written every day by .github/workflows/update-pubs.yml (scripts/update_pubs.py).
+   It updates citation counts, turns "submitted"/"accepted" into the journal reference once a paper
+   is published, and adds new papers found with my ORCID. PUBS above stays the main list. */
+function setText(el, en, ja, zh) {
+  el.dataset.en = en; el.dataset.ja = ja; el.dataset.zh = zh;
+  el.innerHTML = LANG === "ja" ? ja : LANG === "zh" ? zh : en;
+}
+function swapNumber(el, n) {
+  const cur = { en: el.dataset.en ?? el.innerHTML, ja: el.dataset.ja, zh: el.dataset.zh };
+  const f = t => (t ?? "").replace(/\d+/, n);
+  setText(el, f(cur.en), f(cur.ja), f(cur.zh));
+}
+function hIndex(cs) {
+  const s = cs.filter(c => c > 0).sort((a, b) => b - a);
+  let h = 0; while (h < s.length && s[h] >= h + 1) h++;
+  return h;
+}
+function applyAds(A) {
+  for (const p of PUBS) {
+    const r = (p.ax && A.by_arxiv[p.ax]) || A.by_title[p.t];
+    if (!r) continue;
+    p.c = r.c;
+    if (r.j && /submitted|accepted|in press/i.test(p.j)) { p.j = r.j; if (r.y) p.y = r.y; }
+  }
+  const fresh = (A.new || []).map(p => ({ ...p, auto: true }));
+  ALL = ["first", "co", "review"].flatMap(cat => [...fresh.filter(p => p.cat === cat), ...PUBS.filter(p => p.cat === cat)]);
+  ALL.forEach((p, i) => p.n = i + 1);
+
+  const count = { rep: ALL.filter(p => p.rep).length, first: ALL.filter(p => p.cat === "first").length,
+                  co: ALL.filter(p => p.cat === "co").length, all: ALL.length };
+  document.querySelectorAll(".filters button").forEach(b => swapNumber(b, count[b.dataset.f]));
+
+  // Auto-added preprints are listed but not counted as refereed papers.
+  const counted = ALL.filter(p => p.cat !== "review" && p.j !== "arXiv preprint");
+  const papers = counted.length;
+  const cites = ALL.reduce((s, p) => s + (p.c || 0), 0);
+  const h = hIndex(ALL.map(p => p.c || 0));
+  document.getElementById("st-papers").textContent = papers;
+  swapNumber(document.getElementById("st-papers-l"), counted.filter(p => p.cat === "first").length);
+  document.getElementById("st-cites").textContent = cites.toLocaleString("en-US");
+  setText(document.getElementById("st-cites-l"), `citations · h-index ${h}`, `被引用数 · h指数 ${h}`, `次引用 · h指數 ${h}`);
+
+  const d = new Date(A.updated);
+  const ymd = { en: d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }),
+                ja: `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日`, zh: `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日` };
+  const sci = "https://scixplorer.org/search?q=orcid%3A0000-0002-1688-8708&amp;sort=date+desc";
+  setText(document.getElementById("pubsource"),
+    `Citation counts are from NASA ADS and are updated every day (last update: ${ymd.en}). For the full record, see <a href="${sci}" target="_blank" rel="noopener">SciX</a>.`,
+    `被引用数はNASA ADSの値で、毎日自動で更新しています(最終更新:${ymd.ja})。全体は<a href="${sci}" target="_blank" rel="noopener">SciX</a>をご覧ください。`,
+    `引用次數取自NASA ADS,每日自動更新(最後更新:${ymd.zh})。完整列表請見<a href="${sci}" target="_blank" rel="noopener">SciX</a>。`);
+  render(FILTER);
+}
+fetch("data/ads.json?" + Date.now()).then(r => r.ok ? r.json() : null).then(A => { if (A) applyAds(A); }).catch(() => {});
 
 document.getElementById("copy").addEventListener("click", e => {
   const t = document.getElementById("email").textContent;
