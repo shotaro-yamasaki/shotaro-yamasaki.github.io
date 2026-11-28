@@ -1,17 +1,17 @@
 {
- "updated": "2026-11-27T19:54:15+00:00",
+ "updated": "2026-11-28T09:24:55+00:00",
  "by_arxiv": {
-  "2611.15099": {
-   "c": 0,
-   "j": null,
-   "y": 2026,
-   "bibcode": "2026arXiv261115099Y"
-  },
   "2611.24202": {
    "c": 0,
    "j": null,
    "y": 2026,
    "bibcode": "2026arXiv261124202Y"
+  },
+  "2611.15099": {
+   "c": 0,
+   "j": null,
+   "y": 2026,
+   "bibcode": "2026arXiv261115099Y"
   },
   "2608.09192": {
    "c": 0,
@@ -55,6 +55,12 @@
    "y": 2025,
    "bibcode": "2025ApJ...980...26S"
   },
+  "2309.14337": {
+   "c": 34,
+   "j": "MNRAS, 527, 11158",
+   "y": 2024,
+   "bibcode": "2024MNRAS.52711158Y"
+  },
   "2309.17451": {
    "c": 19,
    "j": "MNRAS, 528, 3854",
@@ -66,12 +72,6 @@
    "j": "MNRAS Letters, 528, L133",
    "y": 2024,
    "bibcode": "2024MNRAS.528L.133Y"
-  },
-  "2309.14337": {
-   "c": 33,
-   "j": "MNRAS, 527, 11158",
-   "y": 2024,
-   "bibcode": "2024MNRAS.52711158Y"
   },
   "2112.06945": {
    "c": 24,
@@ -173,7 +173,7 @@
  "by_title": {
   "A Possible Solution to the Fermi Paradox? The Lethal Impact of Asteroid Collisions, Supernova Explosions, and Giant Molecular Clouds on Advanced Technological Civilization Migration": {
    "c": 0,
-   "j": null,
+   "j": "ApJ, 1012, 86",
    "y": 2026,
    "bibcode": "2026ApJ..1012...86S"
   }
